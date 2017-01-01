@@ -1,0 +1,7 @@
+#Sun Jan 01 20:39:51 CST 2017
+base.0=G\:\\ub_code\\android\\idea\\GongjisoTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_c92131df8bb6b3a93587bbe207a7af365055bcf9
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=G\:\\ub_code\\android\\idea\\GongjisoTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_b86233fd1a8ca86bc6cdf48f2fe8cb5a8cde896d\\classes.dex
+base.1=G\:\\ub_code\\android\\idea\\GongjisoTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_b86233fd1a8ca86bc6cdf48f2fe8cb5a8cde896d
+file.0=G\:\\ub_code\\android\\idea\\GongjisoTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_c92131df8bb6b3a93587bbe207a7af365055bcf9\\classes.dex
