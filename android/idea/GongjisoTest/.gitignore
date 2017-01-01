@@ -7,11 +7,5 @@
 /build/*
 /captures
 .externalNativeBuild
-src/androidTest/
-src/main/java/com/wdsunday/weight/
-src/test/
-app/src/androidTest/
-app/src/main/java/com/wdsunday/weight/
-app/src/test/
 app/build/
 build/
