@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_alarm"
+    android:background="@drawable/item_common_bg_selector">
+
+    <RelativeLayout 
+         android:id="@+id/rl_bus_station"
+         android:layout_alignParentLeft="true"
+         android:layout_width="match_parent"
+		 android:layout_height="wrap_content"
+		 android:layout_centerVertical="true"
+		 android:background="@color/common_background_color">
+		 
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" 
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="5dp"
+	        android:background="@color/base_white_color">
+	        
+	        <TextView
+	         	android:id="@+id/tv_bus_station"
+	         	android:layout_width="wrap_content"
+	         	android:layout_height="wrap_content"
+	        	android:textSize="20sp"
+	        	android:textColor="@color/base_light_blue_color"
+	         	android:padding="5dp"/>
+	         
+	         <TextView
+	         	android:id="@+id/tv_current_distance"
+	         	android:layout_below="@+id/tv_bus_station"
+	         	android:layout_width="wrap_content"
+	         	android:layout_height="wrap_content"
+	         	android:textSize="13sp"
+	         	android:padding="5dp"/>
+	         
+	         <TextView
+	         	android:id="@+id/tv_alarm_state"
+	         	android:layout_toRightOf="@+id/tv_current_distance"
+	         	android:layout_below="@+id/tv_bus_station"
+	         	android:layout_width="wrap_content"
+	         	android:layout_height="wrap_content"
+	         	android:textSize="13sp"
+	         	android:padding="5dp"/>
+	    </RelativeLayout>
+         
+    </RelativeLayout>
+    
+   <ImageView
+     android:id="@+id/iv_open_alarm"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentRight="true"
+     android:layout_centerVertical="true"
+     android:layout_marginRight="10dp"
+     android:background="@drawable/icon_button_on"
+     android:visibility="visible" />
+
+	<ImageView
+     android:id="@+id/iv_close_alarm"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentRight="true"
+     android:layout_centerVertical="true"
+     android:layout_marginRight="10dp"
+     android:background="@drawable/icon_button_off"
+     android:visibility="invisible" />
+
+</RelativeLayout>
+         

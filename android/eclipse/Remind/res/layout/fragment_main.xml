@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/center_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_background_color">
+    
+     <RelativeLayout  
+         android:layout_width="match_parent"
+    	 android:layout_height="wrap_content"
+    	 android:layout_marginTop="5dip"
+    	 android:layout_marginLeft="10dip"
+    	 android:layout_marginRight="10dip"
+    	 android:id="@+id/relativeLayout1">
+    	 
+         <include
+		    android:id="@+id/common_baidu_search_header"
+		    layout="@layout/common_baidu_search_header" />
+    
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip" >
+
+         <com.baidu.mapapi.map.MapView
+	     	android:id="@+id/bmapView"
+	     	android:layout_width="fill_parent"
+	     	android:layout_height="fill_parent"/> 
+	     	
+     </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+        android:orientation="vertical">
+        
+     <Button
+         android:id="@+id/btn_map_mode"
+         android:layout_width="30dip"
+         android:layout_height="30dip"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:layout_marginBottom="70dip"
+         android:layout_marginLeft="10dip"
+         android:background="@drawable/main_icon_location" />
+   
+	    <LinearLayout
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content"
+	       android:layout_alignParentBottom="true"
+	       android:layout_alignParentRight="true"
+	       android:layout_alignWithParentIfMissing="false"
+	       android:layout_marginBottom="70dip"
+	       android:layout_marginRight="10dip"
+	       android:orientation="vertical" >
+	
+	       <Button
+	           android:id="@+id/btn_zoom_in"
+	           android:layout_width="30dip"
+	           android:layout_height="30dip"
+	           android:layout_marginLeft="2dip"
+	           android:layout_marginRight="2dip"
+	           android:layout_weight="1.0"
+	           android:background="@drawable/zoom_in_selector" />
+	       
+	       <Button
+	           android:id="@+id/btn_zoom_out"
+	           android:layout_width="30dip"
+	           android:layout_height="30dip"
+	           android:layout_marginLeft="2dip"
+	           android:layout_marginRight="2dip"
+	           android:layout_weight="1.0"
+	           android:background="@drawable/zoom_out_selector"/>
+	    </LinearLayout>
+
+    </RelativeLayout>
+    
+</RelativeLayout>

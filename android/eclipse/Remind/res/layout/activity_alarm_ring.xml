@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.remind.ui.AlarmRingActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <include
+		android:id="@+id/common_actionbar"
+		layout="@layout/include_common_header" />
+    
+    <RelativeLayout
+         android:layout_width="match_parent"
+    	 android:layout_height="match_parent"
+    	 android:layout_below="@+id/common_actionbar"
+    	 android:layout_above="@+id/slideButton"
+    	 android:background="@color/base_white_color">
+       
+        <TextView
+	        android:id="@+id/tv_destinations_tips"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="120dp"
+	        android:textSize="25sp"
+	        android:text="@string/reach_destinations"/>
+        
+        <TextView
+	        android:id="@+id/tv_position_name"
+	        android:layout_below="@+id/tv_destinations_tips"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:textSize="30sp"/>
+        
+    </RelativeLayout>
+    
+    <com.remind.widget.Slidebutton
+        android:id="@+id/slideButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp" />
+
+</RelativeLayout>
+

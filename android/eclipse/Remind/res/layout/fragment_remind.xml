@@ -1,0 +1,29 @@
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+    
+     <include
+		android:id="@+id/common_actionbar"
+		layout="@layout/include_common_header" />
+    
+    <RelativeLayout
+        android:id="@+id/rl_sleep_plan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/common_background_color"
+        android:layout_below="@+id/common_actionbar" >
+        
+    	<ListView
+		  	android:id="@+id/lv_sleep_plan_detail"
+		  	android:layout_width="match_parent"
+		  	android:layout_height="wrap_content">
+	
+		</ListView>
+        
+	</RelativeLayout>
+     
+</RelativeLayout>

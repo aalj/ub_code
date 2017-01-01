@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <color name="theme_color">#6CBB52</color>
+    <color name="common_action_bar_color">#6CBB52</color>
+    <color name="common_background_color">#F7F7F7</color>
+    <color name="common_item_background_color">#489cfa</color>
+    
+	<color name="behind_title_bg_color">#2000</color>
+    <color name="xlistview_bg_color">#f4f6f6</color>
+ 
+    <color name="base_light_blue_color">#276CBA</color>
+ 	<color name="base_light_red_color">#A42D21</color>
+ 	<color name="base_dark_red_color">#DC143C</color>
+ 	<color name="base_transparent_color">#00000000</color>
+    <color name="base_black_color">#3e3e39</color>
+    <color name="base_gray_color">#9fa0a0</color>
+    <color name="base_white_color">#ffffff</color>
+    <color name="base_orange_color">#f82c22</color>
+    
+    <color name="main_tab_text_normal">#000000</color>
+    <color name="main_tab_text_press">#6CBB52</color>
+    
+</resources>
