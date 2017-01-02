@@ -26,8 +26,20 @@ public class ParsesHomeData {
 
     public List<LineBean> parseHtml() {
         Document doc = Jsoup.parse(html);
-        Elements trs = doc.select("span").select("table").select("tr");
         List<LineBean> lineBeans = new ArrayList<>();
+        Elements spanDiv = doc.select("span").select("table");
+        if(spanDiv.size()<=0){
+            LineBean lineBean = new LineBean();
+            lineBean.pathName = spanDiv.text();
+            lineBean.lineName = "";
+            lineBean.link = "";
+            lineBeans.add(lineBean);
+            return lineBeans;
+        }
+
+        Elements trs = spanDiv.select("tr");
+
+
         LineBean lineBean = null;
         for (int i = 0; i < trs.size(); i++) {
             Elements tds = trs.get(i).select("td");

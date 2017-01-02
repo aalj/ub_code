@@ -45,6 +45,11 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
         return false;
     }
 
+    public V getView(){
+        return proxyView;
+    }
+
+
 
     @Override
     public void attachView(V view) {

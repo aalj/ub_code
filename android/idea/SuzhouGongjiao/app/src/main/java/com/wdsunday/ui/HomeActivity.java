@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.view.*;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,25 +17,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.wdsunday.R;
 import com.wdsunday.database.ParsesHomeData;
 import com.wdsunday.database.bean.LineBean;
+import com.wdsunday.framework.base.view.impl.MvpActivity;
 import com.wdsunday.http.HttpManger;
 import com.wdsunday.http.SendData;
+import com.wdsunday.ui.testmvp.TotalPresenter;
+import com.wdsunday.ui.testmvp.TotalView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TotalView {
     private Button but = null;
     private ListView list = null;
     private Activity mActivity;
-    private MyList adapter =null;
+    private MyList adapter = null;
     private List<LineBean> lineBeans = null;
+    private EditText lineNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,15 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public TotalPresenter createPresenter() {
+        return new TotalPresenter(this);
+    }
+
+    @Override
+    public TotalView createView() {
+        return this;
+    }
 
 
     @Override
@@ -120,19 +137,15 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if(R.id.but_home==id){
-            HttpManger.useOkHttp(new SendData() {
-                @Override
-                public void sendString(String data) {
-//                    System.out.println(data);
-                     lineBeans = new ParsesHomeData(data).parseHtml();
-                    Message msg = new Message();
-                    msg.what = 0x0110;
-                    msg.obj=lineBeans;
-                    handler.sendMessage(msg);
+        if (R.id.but_home == id) {
 
-                }
-            });
+            String lineNumStr = lineNum.getText().toString().trim();
+            if (!TextUtils.isEmpty(lineNumStr)) {
+                getPresenter().getTotalLines(lineNumStr);
+            }else{
+                Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -140,38 +153,36 @@ public class HomeActivity extends AppCompatActivity
         but = (Button) findViewById(R.id.but_home);
         but.setOnClickListener(this);
 
-        list = (ListView)findViewById(R.id.list);
+        list = (ListView) findViewById(R.id.list);
         adapter = new MyList();
         list.setAdapter(adapter);
 
+        lineNum = (EditText) findViewById(R.id.linenum);
+
     }
 
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            int what = msg.what;
-            if(0x0110==what){
-                List<LineBean> list= (List<LineBean>) msg.obj;
-                adapter.setData(list);
-            }
+
+    @Override
+    public void getTotalLines(List<LineBean> lineBeens) {
+        adapter.setData(lineBeens);
+//        Message msg = new Message();
+//        msg.what = 0x0110;
+//        msg.obj = lineBeens;
+//        handler.sendMessage(msg);
+    }
 
 
-            super.handleMessage(msg);
-        }
-    };
-
-
-
-
-    class MyList extends BaseAdapter{
+    class MyList extends BaseAdapter {
         List<LineBean> list = new ArrayList<>();
 
-        public void setData(List<LineBean> list){
+        public void setData(List<LineBean> list) {
             if (list != null && list.size() > 0) {
-               this. list.clear();
+                this.list.clear();
                 this.list.addAll(list);
-                notifyDataSetChanged();
+            }else{
+                this.list.clear();
             }
+                notifyDataSetChanged();
         }
 
         @Override
@@ -192,13 +203,13 @@ public class HomeActivity extends AppCompatActivity
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             HolderView holderView = null;
-            if(view == null){
-                view = View.inflate(mActivity,R.layout.item,null);
+            if (view == null) {
+                view = View.inflate(mActivity, R.layout.item, null);
                 holderView = new HolderView();
                 holderView.lineName = (TextView) view.findViewById(R.id.textView3);
                 holderView.staticName = (TextView) view.findViewById(R.id.textView2);
                 view.setTag(holderView);
-            }else{
+            } else {
                 holderView = (HolderView) view.getTag();
             }
 
@@ -208,19 +219,15 @@ public class HomeActivity extends AppCompatActivity
             return view;
         }
 
-        class HolderView{
-            public TextView lineName ;
-            public TextView staticName ;
+        class HolderView {
+            public TextView lineName;
+            public TextView staticName;
 
 
         }
 
 
     }
-
-
-
-
 
 
 }
