@@ -1,6 +1,7 @@
 package com.wdsunday.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.Layout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,24 +27,26 @@ import android.widget.Toast;
 
 import com.wdsunday.R;
 import com.wdsunday.database.ParsesHomeData;
-import com.wdsunday.database.bean.LineBean;
+import com.wdsunday.database.bean.LineInfoBean;
+import com.wdsunday.database.bean.SearchLineBean;
 import com.wdsunday.framework.base.view.impl.MvpActivity;
 import com.wdsunday.http.HttpManger;
 import com.wdsunday.http.SendData;
 import com.wdsunday.ui.testmvp.TotalPresenter;
 import com.wdsunday.ui.testmvp.TotalView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
 public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TotalView {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TotalView, AdapterView.OnItemClickListener {
     private Button but = null;
     private ListView list = null;
     private Activity mActivity;
     private MyList adapter = null;
-    private List<LineBean> lineBeans = null;
+    private List<SearchLineBean> lineBeans = null;
     private EditText lineNum;
 
     @Override
@@ -52,6 +57,7 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
+        Log.e("Stone", "1---"+Thread.currentThread().getName() );
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -142,11 +148,16 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
             String lineNumStr = lineNum.getText().toString().trim();
             if (!TextUtils.isEmpty(lineNumStr)) {
                 getPresenter().getTotalLines(lineNumStr);
-            }else{
+            } else {
                 Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();
             }
 
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        getPresenter().getLineInfo(lineBeans.get(position).link);
     }
 
     private void initView() {
@@ -156,6 +167,7 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
         list = (ListView) findViewById(R.id.list);
         adapter = new MyList();
         list.setAdapter(adapter);
+        list.setOnItemClickListener(this);
 
         lineNum = (EditText) findViewById(R.id.linenum);
 
@@ -163,7 +175,15 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
 
 
     @Override
-    public void getTotalLines(List<LineBean> lineBeens) {
+    public void getTotalLines(List<SearchLineBean> lineBeens) {
+
+        this.lineBeans = lineBeens;
+        Toast.makeText(mActivity,lineBeans.size()+"",Toast.LENGTH_SHORT).show();
+
+        Log.e("Stone", Thread.currentThread().getName() );
+
+        Toast.makeText(mActivity,lineBeens.size()+"",Toast.LENGTH_SHORT).show();
+
         adapter.setData(lineBeens);
 //        Message msg = new Message();
 //        msg.what = 0x0110;
@@ -171,18 +191,26 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
 //        handler.sendMessage(msg);
     }
 
+    @Override
+    public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
+        Intent intent = new Intent(mActivity, LineInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("lineinfo", (Serializable) lineInfoBeen);
+        startActivity(intent);
+    }
+
 
     class MyList extends BaseAdapter {
-        List<LineBean> list = new ArrayList<>();
+        List<SearchLineBean> list = new ArrayList<>();
 
-        public void setData(List<LineBean> list) {
+        public void setData(List<SearchLineBean> list) {
             if (list != null && list.size() > 0) {
                 this.list.clear();
                 this.list.addAll(list);
-            }else{
+            } else {
                 this.list.clear();
             }
-                notifyDataSetChanged();
+            notifyDataSetChanged();
         }
 
         @Override

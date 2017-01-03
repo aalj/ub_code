@@ -49,4 +49,34 @@ public class HttpManger {
     }
 
 
+
+    public static void useOkHttpGet( String param,final SendData sendData) {
+
+
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BaseConsTent.HTTP_URL+"?"+param)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    sendData.sendString(response.body().string());
+                }
+            }
+        });
+
+
+
+    }
+
+
 }

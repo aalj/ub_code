@@ -14,5 +14,9 @@ public class TotalModel extends MvpBaseModel {
 
     }
 
+    public void getLineInfo(String param , SendData sendData){
+        HttpManger.useOkHttpGet(param,sendData);
+
+    }
 
 }

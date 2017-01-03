@@ -3,8 +3,12 @@ package com.wdsunday.database;
 import android.content.ContentValues;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Switch;
+
 import com.wdsunday.contstant.BaseConsTent;
-import com.wdsunday.database.bean.LineBean;
+import com.wdsunday.database.bean.LineInfoBean;
+import com.wdsunday.database.bean.SearchLineBean;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,19 +21,19 @@ import java.util.List;
  * Created by liang on 2017/1/1.
  */
 public class ParsesHomeData {
-    private String html = null;
+    private Document doc = null;
 
 
     public ParsesHomeData(String html) {
-        this.html = html;
+        doc = Jsoup.parse(html);
     }
 
-    public List<LineBean> parseHtml() {
-        Document doc = Jsoup.parse(html);
-        List<LineBean> lineBeans = new ArrayList<>();
+    public List<SearchLineBean> parseHtmlSearchLine() {
+
+        List<SearchLineBean> lineBeans = new ArrayList<>();
         Elements spanDiv = doc.select("span").select("table");
-        if(spanDiv.size()<=0){
-            LineBean lineBean = new LineBean();
+        if (spanDiv.size() <= 0) {
+            SearchLineBean lineBean = new SearchLineBean();
             lineBean.pathName = spanDiv.text();
             lineBean.lineName = "";
             lineBean.link = "";
@@ -40,11 +44,11 @@ public class ParsesHomeData {
         Elements trs = spanDiv.select("tr");
 
 
-        LineBean lineBean = null;
+        SearchLineBean lineBean = null;
         for (int i = 0; i < trs.size(); i++) {
             Elements tds = trs.get(i).select("td");
             if (lineBean == null) {
-                lineBean = new LineBean();
+                lineBean = new SearchLineBean();
             }
             for (int j = 0; j < tds.size(); j++) {
                 Elements a = tds.get(j).select("a");
@@ -66,5 +70,51 @@ public class ParsesHomeData {
 
     }
 
+
+    public List<LineInfoBean> parseHtmlLineInfo() {
+        List<LineInfoBean> lineBeans = new ArrayList<>();
+        Elements spanDiv = doc.select("span").select("table");
+
+
+        Elements trs = spanDiv.select("tr");
+
+
+        LineInfoBean lineBean = null;
+        for (int i = 0; i < trs.size(); i++) {
+            Elements tds = trs.get(i).select("td");
+            if (lineBean == null) {
+                lineBean = new LineInfoBean();
+            }
+            for (int j = 0; j < tds.size(); j++) {
+                Elements a = tds.get(j).select("a");
+
+                String divName = tds.get(j).text();
+                switch (j) {
+                    case 0:
+                        String href = a.attr("href");
+                        lineBean.stationName = divName;
+                        lineBean.lineUrl = href;
+                        break;
+                    case 1:
+                        lineBean.stationNum = divName;
+
+                        break;
+                    case 2:
+                        lineBean.carNumber = divName;
+                        break;
+                    case 3:
+                        lineBean.time = divName;
+                        break;
+
+                }
+
+            }
+
+            lineBeans.add(lineBean);
+
+            lineBean = null;
+        }
+        return lineBeans;
+    }
 
 }

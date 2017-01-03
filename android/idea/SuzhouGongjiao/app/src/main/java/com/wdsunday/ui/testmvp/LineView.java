@@ -7,13 +7,11 @@ import com.wdsunday.framework.base.view.MvpView;
 import java.util.List;
 
 /**
- * Created by stone on 17-1-2.
+ * Created by stone on 17-1-3.
  */
 
-public interface TotalView extends MvpView {
-
-    void getTotalLines(List<SearchLineBean> lineBeens);
-
+public interface LineView extends MvpView{
     void getLineInfo(List<LineInfoBean> lineInfoBeen);
+
 
 }

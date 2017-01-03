@@ -3,7 +3,7 @@ package com.wdsunday.database.bean;
 /**
  * Created by liang on 2017/1/1.
  */
-public class LineBean {
+public class SearchLineBean {
     public String lineName;
     public String pathName;
     public String link;

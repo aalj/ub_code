@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.wdsunday.database.ParsesHomeData;
-import com.wdsunday.database.bean.LineBean;
+import com.wdsunday.database.bean.LineInfoBean;
+import com.wdsunday.database.bean.SearchLineBean;
 import com.wdsunday.framework.base.presenter.impl.MvpBasePresenter;
 import com.wdsunday.http.SendData;
 
@@ -32,7 +33,7 @@ public class TotalPresenter extends MvpBasePresenter<TotalView> {
             @Override
             public void sendString(String data) {
                 ParsesHomeData parsesHomeData = new ParsesHomeData(data);
-               final List<LineBean> lineBeens = parsesHomeData.parseHtml();
+               final List<SearchLineBean> lineBeens = parsesHomeData.parseHtmlSearchLine();
                 ((Activity) context).runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {
@@ -44,5 +45,25 @@ public class TotalPresenter extends MvpBasePresenter<TotalView> {
         });
     }
 
+
+    public void getLineInfo(String param) {
+
+        totalModel.getLineInfo(param, new SendData() {
+            @Override
+            public void sendString(String data) {
+                ParsesHomeData parsesHomeData = new ParsesHomeData(data);
+                final List<LineInfoBean> lineInfoBeans = parsesHomeData.parseHtmlLineInfo();
+
+
+                ((Activity) context).runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        getView().getLineInfo(lineInfoBeans);
+                    }
+                });
+            }
+        });
+
+    }
 
 }
