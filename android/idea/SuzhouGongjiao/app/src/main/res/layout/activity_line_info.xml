@@ -10,4 +10,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.wdsunday.ui.LineInfoActivity">
 
+    <ListView
+        android:id="@+id/listL_lineinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </ListView>
+
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.wdsunday.http;
 import android.support.annotation.NonNull;
 
 import com.wdsunday.contstant.BaseConsTent;
+
 import okhttp3.*;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class HttpManger {
 
 
-    public static void useOkHttp( String lineNum, final SendData sendData) {
+    public static void useOkHttp(String lineNum, final SendData sendData) {
 
         // 表单提交 这种能满足大部分的需求
         RequestBody formBody = new FormBody.Builder()
@@ -38,27 +39,29 @@ public class HttpManger {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     sendData.sendString(response.body().string());
                 }
             }
         });
 
 
-
     }
 
 
+    public static void useOkHttpGet(String param, final SendData sendData) {
 
-    public static void useOkHttpGet( String param,final SendData sendData) {
-
-
+        String url = "http://www.szjt.gov.cn/apts/?" + param;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(BaseConsTent.HTTP_URL+"?"+param)
-                .get()
+                .url("http://www.szjt.gov.cn/apts/" + param)
+//                .url("http://gank.io/api/data/Android/10/1")
                 .build();
+//        Request request = new Request.Builder()
+//                .url("http://www.szjt.gov.cn/apts/" + param)
+//                .get()
+//                .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -68,12 +71,12 @@ public class HttpManger {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()) {
-                    sendData.sendString(response.body().string());
+                if (response.isSuccessful()) {
+                    String string = response.body().string();
+                    sendData.sendString(string);
                 }
             }
         });
-
 
 
     }

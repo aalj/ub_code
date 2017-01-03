@@ -1,10 +1,12 @@
 package com.wdsunday.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.wdsunday.R;
@@ -18,13 +20,19 @@ import java.util.List;
 
 public class LineInfoActivity extends MvpActivity<LineView,LinePresenter> {
     private Activity mActivity;
+    private ListView listL_lineinfo  = null;
+    MyList adapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_info);
         mActivity = this;
+        initView();
+        initIntent();
     }
+
+
 
     @Override
     public LinePresenter createPresenter() {
@@ -34,6 +42,34 @@ public class LineInfoActivity extends MvpActivity<LineView,LinePresenter> {
     @Override
     public LineView createView() {
         return null;
+    }
+
+
+    private void initView() {
+        listL_lineinfo = (ListView) findViewById(R.id.listL_lineinfo);
+          adapter = new MyList();
+        listL_lineinfo.setAdapter(adapter);
+    }
+
+
+    public void initIntent(){
+        Intent intent = getIntent();
+            List<LineInfoBean> lineInfoBeen = null;
+        if(intent.hasExtra(HomeActivity.LINEINFO_BUNDLE)){
+            Bundle bundleExtra = intent.getBundleExtra(HomeActivity.LINEINFO_BUNDLE);
+            lineInfoBeen  = (List<LineInfoBean>) bundleExtra.get(HomeActivity.LINEINFO);
+        }else{
+            finish();
+            return;
+        }
+
+        if(lineInfoBeen== null&& lineInfoBeen.size()<=0){
+            finish();
+            return;
+        }
+        adapter.setData(lineInfoBeen);
+
+
     }
 
     class MyList extends BaseAdapter {

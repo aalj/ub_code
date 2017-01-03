@@ -48,6 +48,8 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
     private MyList adapter = null;
     private List<SearchLineBean> lineBeans = null;
     private EditText lineNum;
+    public static final String LINEINFO= "lineinfo";
+    public static final String LINEINFO_BUNDLE= "lineinfo_bundle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,11 +180,6 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
     public void getTotalLines(List<SearchLineBean> lineBeens) {
 
         this.lineBeans = lineBeens;
-        Toast.makeText(mActivity,lineBeans.size()+"",Toast.LENGTH_SHORT).show();
-
-        Log.e("Stone", Thread.currentThread().getName() );
-
-        Toast.makeText(mActivity,lineBeens.size()+"",Toast.LENGTH_SHORT).show();
 
         adapter.setData(lineBeens);
 //        Message msg = new Message();
@@ -195,7 +192,8 @@ public class HomeActivity extends MvpActivity<TotalView, TotalPresenter>
     public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
         Intent intent = new Intent(mActivity, LineInfoActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("lineinfo", (Serializable) lineInfoBeen);
+        bundle.putSerializable(LINEINFO, (Serializable) lineInfoBeen);
+        intent.putExtra(LINEINFO_BUNDLE,bundle);
         startActivity(intent);
     }
 
