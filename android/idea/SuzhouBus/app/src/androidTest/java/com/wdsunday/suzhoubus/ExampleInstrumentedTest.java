@@ -1,4 +1,4 @@
-package com.wdsunday.suzhougongjiao;
+package com.wdsunday.suzhoubus;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.wdsunday.suzhougongjiao", appContext.getPackageName());
+        assertEquals("com.wdsunday.suzhoubus", appContext.getPackageName());
     }
 }

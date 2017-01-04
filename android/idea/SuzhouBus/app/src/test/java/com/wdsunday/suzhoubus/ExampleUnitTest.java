@@ -1,4 +1,4 @@
-package com.wdsunday.suzhougongjiao;
+package com.wdsunday.suzhoubus;
 
 import org.junit.Test;
 
