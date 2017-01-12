@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SuzhouBus.iml" filepath="$PROJECT_DIR$/SuzhouBus.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dream_Architect_MvpFramework/dream_Architect_MvpFramework.iml" filepath="$PROJECT_DIR$/dream_Architect_MvpFramework/dream_Architect_MvpFramework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dream_Architect_MvpFramework2/dream_Architect_MvpFramework2.iml" filepath="$PROJECT_DIR$/dream_Architect_MvpFramework2/dream_Architect_MvpFramework2.iml" />
     </modules>
   </component>
 </project>

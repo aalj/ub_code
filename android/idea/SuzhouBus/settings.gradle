@@ -1,1 +1,3 @@
 include ':app'
+include ':dream_Architect_MvpFramework'
+include ':dream_Architect_MvpFramework2'

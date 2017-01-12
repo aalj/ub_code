@@ -12,13 +12,13 @@ import android.widget.TextView;
 import com.wdsunday.R;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.framework.base.view.impl.MvpActivity;
-import com.wdsunday.ui.testmvp.LinePresenter;
-import com.wdsunday.ui.testmvp.LineView;
+import com.wdsunday.ui.testmvp.TotalPresenter;
+import com.wdsunday.ui.testmvp.TotalView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineInfoActivity extends MvpActivity<LineView,LinePresenter> {
+public class LineInfoActivity extends MvpActivity<TotalView,TotalPresenter> {
     private Activity mActivity;
     private ListView listL_lineinfo  = null;
     MyList adapter = null;
@@ -32,15 +32,13 @@ public class LineInfoActivity extends MvpActivity<LineView,LinePresenter> {
         initIntent();
     }
 
-
-
     @Override
-    public LinePresenter createPresenter() {
+    public TotalPresenter createPresenter() {
         return null;
     }
 
     @Override
-    public LineView createView() {
+    public TotalView createView() {
         return null;
     }
 
