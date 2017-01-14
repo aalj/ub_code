@@ -85,34 +85,33 @@ public class ParsesHomeData {
             if (lineBean == null) {
                 lineBean = new LineInfoBean();
             }
-            for (int j = 0; j < tds.size(); j++) {
-                Elements a = tds.get(j).select("a");
+            int size = tds.size();
+            if (size > 0) {
+                for (int j = 0; j < size; j++) {
+                    Elements a = tds.get(j).select("a");
+                    String divName = tds.get(j).text();
+                    switch (j) {
+                        case 0:
+                            String href = a.attr("href");
+                            lineBean.stationName = divName;
+                            lineBean.lineUrl = href;
+                            break;
+                        case 1:
+                            lineBean.stationNum = divName;
 
-                String divName = tds.get(j).text();
-                switch (j) {
-                    case 0:
-                        String href = a.attr("href");
-                        lineBean.stationName = divName;
-                        lineBean.lineUrl = href;
-                        break;
-                    case 1:
-                        lineBean.stationNum = divName;
-
-                        break;
-                    case 2:
-                        lineBean.carNumber = divName;
-                        break;
-                    case 3:
-                        lineBean.time = divName;
-                        break;
+                            break;
+                        case 2:
+                            lineBean.carNumber = divName;
+                            break;
+                        case 3:
+                            lineBean.time = divName;
+                            break;
+                    }
 
                 }
-
+                lineBeans.add(lineBean);
+                lineBean = null;
             }
-
-            lineBeans.add(lineBean);
-
-            lineBean = null;
         }
         return lineBeans;
     }

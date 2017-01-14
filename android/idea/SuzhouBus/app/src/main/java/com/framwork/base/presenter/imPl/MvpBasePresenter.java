@@ -1,7 +1,7 @@
 package com.framwork.base.presenter.imPl;
 
-import com.framwork.base.presenter.MvpPresenter;
-import com.framwork.base.view.MvpView;
+import com.framwork.mvpbase.presenter.MvpPresenter;
+import com.framwork.mvpbase.view.MvpView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
