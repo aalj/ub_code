@@ -4,11 +4,11 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.wdsunday.R;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.view.View;
-import com.wdsunday.R;
 
 /**
  * 具体的策略

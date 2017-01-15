@@ -6,7 +6,7 @@ import com.tz.mvp.framework.support.view.MvpActivity;
 import com.wdsunday.R;
 
 public class MainActivity extends MvpActivity<MainView, MainPresenter> implements MainView{
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,5 +28,6 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
 	public void onRegisterResult(String result) {
 		
 	}
+	
 
 }

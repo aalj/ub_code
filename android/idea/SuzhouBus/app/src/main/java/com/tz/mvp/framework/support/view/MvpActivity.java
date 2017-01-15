@@ -3,7 +3,6 @@ package com.tz.mvp.framework.support.view;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.LinearLayout;
 
 import com.tz.mvp.framework.base.presenter.MvpPresenter;
 import com.tz.mvp.framework.base.view.MvpView;

@@ -15,12 +15,12 @@ import java.lang.reflect.Proxy;
 /**
  * 对于的该类主要的的任务就是进行视图的绑定和解绑。
  * <br/>
- * 但是考虑到View的销毁和意外切换，在该类中采用动态代理
+ * 但是考虑到View的意外销毁，在该类中采用动态代理
  */
 
 public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
-
+    //该类采用的是弱引用
     WeakReference<V> weakView;
 
     private V view;
