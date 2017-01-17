@@ -26,7 +26,7 @@ public class DefaultLceAnimator implements ILceAnimator {
 
 	public static DefaultLceAnimator getInstance() {
 		if (lceAnimator == null) {
-			synchronized (AnimatorUtils.class) {
+			synchronized (DefaultLceAnimator.class) {
 				if (lceAnimator == null) {
 					lceAnimator = new DefaultLceAnimator();
 				}
@@ -50,8 +50,7 @@ public class DefaultLceAnimator implements ILceAnimator {
 		// Not visible yet, so animate the view in
 		AnimatorSet set = new AnimatorSet();
 		ObjectAnimator in = ObjectAnimator.ofFloat(errorView, "alpha", 1f);
-		ObjectAnimator loadingOut = ObjectAnimator.ofFloat(loadingView,
-				"alpha", 0f);
+		ObjectAnimator loadingOut = ObjectAnimator.ofFloat(loadingView,"alpha", 0f);
 
 		set.playTogether(in, loadingOut);
 		set.setDuration(resources
