@@ -27,6 +27,19 @@ public class MvpLceViewImpl<M> implements MvpLceView<M> {
         return iLceAnimator;
     }
 
+
+
+    /**
+     * 添加重写加载监听
+     *
+     * @param onClickListener
+     */
+    public void setOnErrorViewClickListener(View.OnClickListener onClickListener) {
+        if (this.errorView != null) {
+            this.errorView.setOnClickListener(onClickListener);
+        }
+    }
+
     /**
      * 绑定动画的加载策略
      * @param iLceAnimator
@@ -76,7 +89,7 @@ public class MvpLceViewImpl<M> implements MvpLceView<M> {
     }
 
     @Override
-    public void shoeContent() {
+    public void showContent() {
         iLceAnimator.showContent(loadingView,contentView,errorView);
 
     }

@@ -9,14 +9,14 @@ import com.framwork.mvpbase.view.MvpView;
 public interface MvpLceView<M> extends MvpView {
 
     void showLoading(boolean isPullRefresh);
+
     void showError();
-    void shoeContent();
+
+    void showContent();
 
     void bindingData(M data);
 
     void loadData(boolean isPullRefresh);
-
-
 
 
 }

@@ -55,6 +55,21 @@ public class MvpDelegateCallBackProxy<V extends MvpView, P extends MvpPresenter<
         return mvpDelegateCallback.getMvpView();
     }
 
+    @Override
+    public void setRetainInstance(boolean retaionInstance) {
+
+    }
+
+    @Override
+    public boolean isRetainInstance() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldInstanceBeRetained() {
+        return false;
+    }
+
     public void bindingView() {
         getPresenter().bindingView(getMvpView());
     }

@@ -36,7 +36,8 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getDelagateProxy().createPresenter();getDelagateProxy().bindingView();
+        getDelagateProxy().createPresenter();
+        getDelagateProxy().bindingView();
 
 
     }
@@ -86,4 +87,42 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenter<V
     public void onAttachedToWindow() {
 
     }
+
+    //以下两个方法用于对数据是否保存的处理
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        // 存储对象(思考：到底要存什么数据？)
+        // 保存：Presenter对象引用（时时刻刻保持引用对象）
+        // 保存：数据（List数据、对象数据）例如：用户名、密码等等......
+        // 判断到底要不要缓存该对象（可配置）
+        // 不是所有的Activity都需要缓存(具体的要更具需求确定)
+        // 例如：表单页面
+        // 思考怎么判断我要保存呢？
+        boolean retained = activityDelegateCallBack.shouldInstanceBeRetained();
+        // 根据状态，判断是否保存Presenter，不保存我就立马释放
+        P presenter = retained ? activityDelegateCallBack.getPresenter() : null;
+        //保存数据对象
+        Object instance = activityDelegateCallBack
+                .onRetainCustomNonConfigurationInstance();
+        //两个对对象都等于空,不需要缓存,
+        if (presenter == null && instance == null) {
+            return null;
+        }
+        //需要缓存
+        return new ActivityMvpConfigurationInstance<V, P>(presenter
+                , instance);
+    }
+
+    @Override
+    public Object getLastCustomNonConfigurationInstance() {
+        Object instance = activityDelegateCallBack
+                .getLastCustomNonConfigurationInstance();
+        if (instance != null && instance instanceof ActivityMvpConfigurationInstance) {
+            ActivityMvpConfigurationInstance<V,P> configurationInstance = (ActivityMvpConfigurationInstance<V, P>) instance;
+            return  configurationInstance.getCustomeConfigurationInstance();
+        }
+        return null;
+    }
+
+
 }

@@ -14,7 +14,7 @@ import com.framwork.mvpbase.view.MvpView;
  * Created by liangjun on 2017/1/15.
  */
 
-public interface ActivityMvpDelegate<V extends MvpView, P extends MvpPresenter<V>>  {
+public interface ActivityMvpDelegate<V extends MvpView, P extends MvpPresenter<V>> {
     void onCreate(Bundle savedInstanceState);
 
     void onStart();
@@ -34,5 +34,10 @@ public interface ActivityMvpDelegate<V extends MvpView, P extends MvpPresenter<V
     void onSaveInstanceState(Bundle outState);
 
     void onAttachedToWindow();
+
+    Object onRetainCustomNonConfigurationInstance();
+
+    Object getLastCustomNonConfigurationInstance();
+
 
 }

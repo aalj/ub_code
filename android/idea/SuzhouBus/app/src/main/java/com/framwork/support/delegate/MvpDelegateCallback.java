@@ -8,6 +8,8 @@ import com.framwork.mvpbase.view.MvpView;
  * 代理模式--静态代理 ：目标接口
  * 理解为需要实现的接口
  * <p>
+ * 对于所有的View Activity Fragment 如果采用MVP模式那么就会实现该接口
+ * <p>
  * Created by liangjun on 2017/1/10.
  */
 
@@ -34,6 +36,15 @@ public interface MvpDelegateCallback<V extends MvpView, P extends MvpPresenter<V
      */
 
     V getMvpView();
+
+
+    //--------------------以上为mvp中各层之间的 绑定 接下来的是 对与数据的存储
+    void setRetainInstance(boolean retaionInstance);
+     boolean isRetainInstance();
+
+    //判断是够保存数据(可以通过该方法判断横竖屏的切换)
+    boolean shouldInstanceBeRetained();
+
 
 
 }
