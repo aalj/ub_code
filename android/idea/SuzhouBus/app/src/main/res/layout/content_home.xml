@@ -6,42 +6,96 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/page_top_padding"
+    android:paddingLeft="@dimen/page_left_padding"
+    android:paddingRight="@dimen/page_right_padding"
+    android:paddingTop="@dimen/page_top_padding"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wdsunday.ui.HomeActivity"
+    tools:context="com.wdsunday.ui.home.HomeActivity"
     tools:showIn="@layout/app_bar_home">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <EditText
-            android:layout_weight="1"
-            android:id="@+id/linenum"
+        <RelativeLayout
+            android:id="@+id/home_search_icon_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入公交番号" />
+            android:gravity="center"
+            android:visibility="gone">
 
-        <Button
-            android:layout_weight="0"
-            android:id="@+id/but_home"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/home_search_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/search" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/home_search_icon"
+                android:layout_alignTop="@id/home_search_icon"
+                android:paddingBottom="@dimen/home_search_icon_padding"
+                android:paddingTop="@dimen/home_search_icon_padding"
+                android:src="@mipmap/search_icon" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/search_action_lay"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
 
-            android:text="请求公交信息" />
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/linenum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="输入公交番号" />
+
+            <ImageView
+                android:id="@+id/search_text_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/delete"
+                android:layout_marginRight="15dp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/home_search_btn_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:src="@mipmap/search_blue"
+                android:text="查询" />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
-
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
+
+
+
+
+
 
 </LinearLayout>

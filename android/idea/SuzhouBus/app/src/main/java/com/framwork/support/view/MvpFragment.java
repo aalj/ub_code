@@ -48,4 +48,14 @@ public class MvpFragment <V extends MvpView,P extends MvpPresenter<V>>
     public V getMvpView() {
         return null;
     }
+
+    @Override
+    public boolean isRetainInstance() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldInstanceBeRetained() {
+        return false;
+    }
 }

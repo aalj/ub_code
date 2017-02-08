@@ -1,19 +1,20 @@
-package com.wdsunday.ui.testmvp;
+package com.wdsunday.ui.home.mvp;
 
+import com.framwork.mvpbase.view.MvpView;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.database.bean.SearchLineBean;
-import com.wdsunday.framework.base.view.MvpView;
 
 import java.util.List;
 
 /**
- * Created by stone on 17-1-2.
+ * Created by liangjun on 2017/2/3.
  */
 
-public interface TotalView extends MvpView {
+public interface HomeView extends MvpView {
 
     void getTotalLines(List<SearchLineBean> lineBeens);
 
     void getLineInfo(List<LineInfoBean> lineInfoBeen);
+
 
 }

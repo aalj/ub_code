@@ -3,6 +3,7 @@ package com.wdsunday.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,12 @@ import android.widget.TextView;
 
 import com.wdsunday.R;
 import com.wdsunday.database.bean.LineInfoBean;
-import com.wdsunday.framework.base.view.impl.MvpActivity;
-import com.wdsunday.ui.testmvp.TotalPresenter;
-import com.wdsunday.ui.testmvp.TotalView;
+import com.wdsunday.ui.home.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineInfoActivity extends MvpActivity<TotalView,TotalPresenter> {
+public class LineInfoActivity extends AppCompatActivity{
     private Activity mActivity;
     private ListView listL_lineinfo  = null;
     MyList adapter = null;
@@ -30,21 +29,19 @@ public class LineInfoActivity extends MvpActivity<TotalView,TotalPresenter> {
         setContentView(R.layout.activity_line_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mActivity = this;
         initView();
         initIntent();
     }
 
-    @Override
-    public TotalPresenter createPresenter() {
-        return null;
-    }
 
-    @Override
-    public TotalView createView() {
-        return null;
-    }
 
 
     private void initView() {

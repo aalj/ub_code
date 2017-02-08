@@ -1,7 +1,11 @@
 package com.framwork.mvpbase.presenter.impl;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.framwork.mvpbase.presenter.MvpPresenter;
 import com.framwork.mvpbase.view.MvpView;
+import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationHandler;
@@ -20,18 +24,27 @@ import java.lang.reflect.Proxy;
 
 public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
-
+    private WeakReference<Context> weakContext;
     WeakReference<V> weakView;
 
     private V view;
+
+    public MvpBasePresenter(Context context) {
+      this.weakContext =   new WeakReference<Context>(context);
+    }
+
+
+    public Context getContext() {
+        return weakContext.get();
+    }
 
     @Override
     public void bindingView(V mvpView) {
         weakView = new WeakReference<V>(mvpView);
         MvpInvocationHandler mvpInvocationHandler = new MvpInvocationHandler(this.weakView.get());
-
+        Log.e("Stone",mvpView.getClass().getSimpleName());
         view = (V) Proxy.newProxyInstance(mvpView
-                        .getClass().getClassLoader(), view.getClass().getInterfaces(),
+                        .getClass().getClassLoader(), mvpView.getClass().getInterfaces(),
                 mvpInvocationHandler);
 
     }
@@ -43,9 +56,10 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
 
     /**
      * 提供获取当前绑定View的方法。
+     *
      * @return
      */
-    public V getView(){
+    public V getView() {
         return view;
     }
 

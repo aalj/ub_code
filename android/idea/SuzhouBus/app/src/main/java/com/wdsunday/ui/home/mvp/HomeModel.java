@@ -1,14 +1,15 @@
-package com.wdsunday.ui.testmvp;
+package com.wdsunday.ui.home.mvp;
 
-import com.wdsunday.framework.base.model.impl.MvpBaseModel;
+import com.framwork.mvpbase.model.MvpModel;
+import com.framwork.mvpbase.model.impl.MvpBaseModel;
 import com.wdsunday.http.HttpManger;
 import com.wdsunday.http.SendData;
 
 /**
- * Created by stone on 17-1-2.
+ * Created by liangjun on 2017/2/3.
  */
 
-public class TotalModel extends MvpBaseModel {
+public class HomeModel extends MvpBaseModel {
     public void getTotal(String lineNmum,SendData sendData){
         HttpManger.useOkHttp(lineNmum,sendData);
 
@@ -18,5 +19,4 @@ public class TotalModel extends MvpBaseModel {
         HttpManger.useOkHttpGet(param,sendData);
 
     }
-
 }

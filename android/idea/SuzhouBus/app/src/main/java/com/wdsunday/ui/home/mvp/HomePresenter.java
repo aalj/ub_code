@@ -1,29 +1,29 @@
-package com.wdsunday.ui.testmvp;
+package com.wdsunday.ui.home.mvp;
 
 import android.app.Activity;
 import android.content.Context;
 
+import com.framwork.mvpbase.presenter.impl.MvpBasePresenter;
 import com.wdsunday.database.ParsesHomeData;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.database.bean.SearchLineBean;
-import com.wdsunday.framework.base.presenter.impl.MvpBasePresenter;
 import com.wdsunday.http.SendData;
 
 import java.util.List;
 import java.util.TimerTask;
 
 /**
- * Created by stone on 17-1-2.
+ * Created by liangjun on 2017/2/3.
  */
 
-public class TotalPresenter extends MvpBasePresenter<TotalView> {
+public class HomePresenter extends MvpBasePresenter<HomeView> {
 
-    private TotalModel totalModel;
+    private HomeModel totalModel;
     private Context context;
 
-    public TotalPresenter(Context context) {
+    public HomePresenter(Context context) {
         super(context);
-        this.totalModel = new TotalModel();
+        this.totalModel = new HomeModel();
         this.context = context;
     }
 
@@ -33,7 +33,7 @@ public class TotalPresenter extends MvpBasePresenter<TotalView> {
             @Override
             public void sendString(String data) {
                 ParsesHomeData parsesHomeData = new ParsesHomeData(data);
-               final List<SearchLineBean> lineBeens = parsesHomeData.parseHtmlSearchLine();
+                final List<SearchLineBean> lineBeens = parsesHomeData.parseHtmlSearchLine();
                 ((Activity) context).runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {

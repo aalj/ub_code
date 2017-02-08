@@ -7,4 +7,6 @@
 
 
     <color name="result_view">#b0000000</color>
+    <color name="click_background_01">#eae7e7</color>
+    <color name="click_background_02">#cac1c1</color>
 </resources>
