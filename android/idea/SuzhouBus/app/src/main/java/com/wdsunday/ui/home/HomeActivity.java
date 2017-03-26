@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.framwork.support.view.MvpActivity;
@@ -51,7 +52,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     private RelativeLayout searchIconLay = null;
     private LinearLayout searchActionLay = null;
     private ImageView searchTextDelete = null;
-    private ImageView searchBtnAction = null;
+    private TextView searchBtnAction = null;
     private RecyclerView list = null;
 
     BaseRecyclerAdapter<SearchLineBean> recyclerAdapter = null;
@@ -140,8 +141,6 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     }
 
 
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         getPresenter().getLineInfo(lineBeans.get(position).link);
@@ -159,7 +158,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         searchIconLay = (RelativeLayout) findViewById(R.id.home_search_icon_lay);
         searchActionLay = (LinearLayout) findViewById(R.id.search_action_lay);
         searchTextDelete = (ImageView) findViewById(R.id.search_text_delete);
-        searchBtnAction = (ImageView) findViewById(R.id.home_search_btn_action);
+        searchBtnAction = (TextView) findViewById(R.id.home_search_btn_action);
         lineNum = (EditText) findViewById(R.id.linenum);
 
         list = (RecyclerView) findViewById(R.id.list);
@@ -198,7 +197,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
             @Override
             protected void bindData(RecyclerViewHolder holder, int position, SearchLineBean item) {
                 holder.setText(R.id.textView3, item.lineName);
-                holder.setText(R.id.textView2,item.pathName);
+                holder.setText(R.id.textView2, item.pathName);
 
             }
         };
@@ -213,11 +212,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         });
 
 
-   }
-
-
-
-
+    }
 
 
     //设置触发搜索框显示的图标
@@ -240,14 +235,15 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
             String lineNumStr = lineNum.getText().toString().trim();
             if (!TextUtils.isEmpty(lineNumStr)) {
                 getPresenter().getTotalLines(lineNumStr);
+                Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();
             }
 
-        }else if(R.id.home_search_icon_lay==id) {//显示搜索框
+        } else if (R.id.home_search_icon_lay == id) {//显示搜索框
             setSearchShowOrHint(false);
 
-        }else if(R.id.search_text_delete == id) {//删除文字按钮
+        } else if (R.id.search_text_delete == id) {//删除文字按钮
             lineNum.setText("");
 
         }
@@ -257,12 +253,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     public void getTotalLines(List<SearchLineBean> lineBeens) {
 
         this.lineBeans = lineBeens;
-// TODO: 2017/2/4 model 获取数据回传
-//        for (SearchLineBean i : lineBeens) {
-            recyclerAdapter.addList(lineBeens);
-
-//        }
-//        adapter.setData(lineBeens);
+        recyclerAdapter.addList(lineBeens);
     }
 
     @Override
@@ -278,9 +269,6 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     public HomePresenter createPresenter() {
         return new HomePresenter(this);
     }
-
-
-
 
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -308,62 +296,5 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
 
         }
     };
-
-
-//    class MyList extends BaseAdapter {
-//        List<SearchLineBean> list = new ArrayList<>();
-//
-//        public void setData(List<SearchLineBean> list) {
-//            if (list != null && list.size() > 0) {
-//                this.list.clear();
-//                this.list.addAll(list);
-//            } else {
-//                this.list.clear();
-//            }
-//            notifyDataSetChanged();
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return list.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int i) {
-//            return list.get(i);
-//        }
-//
-//        @Override
-//        public long getItemId(int i) {
-//            return i;
-//        }
-//
-//        @Override
-//        public View getView(int i, View view, ViewGroup viewGroup) {
-//            HolderView holderView = null;
-//            if (view == null) {
-//                view = View.inflate(mActivity, R.layout.item, null);
-//                holderView = new HolderView();
-//                holderView.lineName = (TextView) view.findViewById(R.id.textView3);
-//                holderView.staticName = (TextView) view.findViewById(R.id.textView2);
-//                view.setTag(holderView);
-//            } else {
-//                holderView = (HolderView) view.getTag();
-//            }
-//
-//            holderView.lineName.setText(list.get(i).lineName);
-//            holderView.staticName.setText(list.get(i).pathName);
-//
-//            return view;
-//        }
-//
-//        class HolderView {
-//            public TextView lineName;
-//            public TextView staticName;
-//        }
-//
-//
-//    }
-
 
 }

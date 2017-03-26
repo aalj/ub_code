@@ -70,15 +70,15 @@
                 android:layout_marginRight="15dp"
                 android:visibility="visible" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/home_search_btn_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:visibility="visible"
                 android:layout_gravity="center"
-                android:src="@mipmap/search_blue"
-                android:text="查询" />
+                android:background="@drawable/search_textview"
+                />
 
 
         </LinearLayout>
