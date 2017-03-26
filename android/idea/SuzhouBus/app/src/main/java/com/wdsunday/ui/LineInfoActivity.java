@@ -3,6 +3,8 @@ package com.wdsunday.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,6 +24,7 @@ public class LineInfoActivity extends AppCompatActivity{
     private Activity mActivity;
     private ListView listL_lineinfo  = null;
     MyList adapter = null;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,19 @@ public class LineInfoActivity extends AppCompatActivity{
         listL_lineinfo = (ListView) findViewById(R.id.listL_lineinfo);
           adapter = new MyList();
         listL_lineinfo.setAdapter(adapter);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                //停止刷新
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+
     }
 
 
