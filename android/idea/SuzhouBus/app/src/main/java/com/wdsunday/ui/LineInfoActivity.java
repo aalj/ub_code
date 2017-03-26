@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.wdsunday.R;
+import com.wdsunday.bus.R;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.ui.home.HomeActivity;
 

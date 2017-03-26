@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.framwork.support.view.MvpActivity;
-import com.wdsunday.R;
+import com.wdsunday.bus.R;
 import com.wdsunday.adapter.BaseRecyclerAdapter;
 import com.wdsunday.adapter.RecyclerViewHolder;
 import com.wdsunday.database.bean.LineInfoBean;
@@ -258,10 +258,10 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
 
         this.lineBeans = lineBeens;
 // TODO: 2017/2/4 model 获取数据回传
-        for (SearchLineBean i : lineBeens) {
-            recyclerAdapter.add(0, i);
+//        for (SearchLineBean i : lineBeens) {
+            recyclerAdapter.addList(lineBeens);
 
-        }
+//        }
 //        adapter.setData(lineBeens);
     }
 

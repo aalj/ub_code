@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.framwork.support.lce.animator.DefaultLceAnimator;
 import com.framwork.support.lce.animator.ILceAnimator;
-import com.wdsunday.R;
+import com.wdsunday.bus.R;
 
 /**
  * 代理模式的目标接口

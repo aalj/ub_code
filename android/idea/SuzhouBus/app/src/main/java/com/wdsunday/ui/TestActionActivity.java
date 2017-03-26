@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.wdsunday.R;
+import com.wdsunday.bus.R;
 
 public class TestActionActivity extends AppCompatActivity {
 

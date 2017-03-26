@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wdsunday.utils.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -43,6 +45,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         mContext = ctx;
         mInflater = LayoutInflater.from(ctx);
         //判断是否加载头部，同时对数据源做处理，给头部和底部预留出显得位置
+        isAddHeadAndFood();
+    }
+
+    private void isAddHeadAndFood() {
         if (isHeaderExist()) mItems.add(0, null);
         if (isFooterExist()) mItems.add(mItems.size(), null);
     }
@@ -263,6 +269,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void addList(List<T> list){
+        if (!ObjectUtils.isBlank(list)) {
+            mItems.clear();
+            mItems.addAll(list);
+            isAddHeadAndFood();
+            notifyDataSetChanged();
         }
     }
 

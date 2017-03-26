@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wdsunday">
+    package="com.wdsunday.bus">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.wdsunday.ui.home.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,11 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.LineInfoActivity">
+        <activity android:name="com.wdsunday.ui.LineInfoActivity">
 
         </activity>
         <activity
-            android:name=".ui.TestActionActivity"
+            android:name="com.wdsunday.ui.TestActionActivity"
             android:label="@string/title_activity_test_action"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
