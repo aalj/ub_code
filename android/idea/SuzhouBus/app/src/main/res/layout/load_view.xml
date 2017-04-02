@@ -32,7 +32,7 @@
             android:textSize="14sp"
             android:visibility="gone" />
 
-        <com.wdsunday.utils.wight.LoadingView
+        <com.wdsunday.utils.wight.ShapeLoadingView
             android:id="@+id/shapeLoadingView"
             android:layout_width="24dp"
             android:layout_height="24dp"

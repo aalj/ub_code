@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.wdsunday.bus.R;
 
-
 /**
  * Created by zzz40500 on 15/6/15.
  */

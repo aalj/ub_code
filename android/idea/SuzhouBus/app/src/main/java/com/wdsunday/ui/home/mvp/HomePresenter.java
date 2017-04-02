@@ -42,7 +42,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                     }
                 });
             }
-        });
+        },context);
     }
 
 
@@ -62,7 +62,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                     }
                 });
             }
-        });
+        },context);
 
     }
 

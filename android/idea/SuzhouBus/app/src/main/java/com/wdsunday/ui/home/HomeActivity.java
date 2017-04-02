@@ -31,12 +31,11 @@ import com.wdsunday.adapter.BaseRecyclerAdapter;
 import com.wdsunday.adapter.RecyclerViewHolder;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.database.bean.SearchLineBean;
-import com.wdsunday.ui.LineInfoActivity;
+import com.wdsunday.ui.businfo.LineInfoActivity;
 import com.wdsunday.ui.home.mvp.HomePresenter;
 import com.wdsunday.ui.home.mvp.HomeView;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +54,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     private TextView searchBtnAction = null;
     private RecyclerView list = null;
 
+//    ShapeLoadingDialog shapeLoadingDialog;
     BaseRecyclerAdapter<SearchLineBean> recyclerAdapter = null;
 
 
@@ -212,6 +212,11 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         });
 
 
+
+//        shapeLoadingDialog=new ShapeLoadingDialog(mActivity);
+//        shapeLoadingDialog.setLoadingText(getResources().getString(R.string.loading));
+//        shapeLoadingDialog.setCanceledOnTouchOutside(false);
+
     }
 
 
@@ -231,6 +236,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     public void onClick(View view) {
         int id = view.getId();
         if (R.id.home_search_btn_action == id) {  //搜索触发
+//            shapeLoadingDialog.show();
 
             String lineNumStr = lineNum.getText().toString().trim();
             if (!TextUtils.isEmpty(lineNumStr)) {
@@ -251,7 +257,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
 
     @Override
     public void getTotalLines(List<SearchLineBean> lineBeens) {
-
+//        shapeLoadingDialog.dismiss();
         this.lineBeans = lineBeens;
         recyclerAdapter.addList(lineBeens);
     }

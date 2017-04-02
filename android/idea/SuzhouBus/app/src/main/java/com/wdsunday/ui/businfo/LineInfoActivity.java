@@ -1,9 +1,8 @@
-package com.wdsunday.ui;
+package com.wdsunday.ui.businfo;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.wdsunday.bus.R;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.ui.home.HomeActivity;
+import com.wdsunday.utils.wight.ShapeLoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
