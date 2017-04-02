@@ -8,4 +8,14 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_test_action">TestActionActivity</string>
     <string name="loading">加载中......</string>
+    <string name="notnetwork">没有网络</string>
+
+
+    <!--运行时权限-->
+
+    <string name="tips">提示</string>
+    <string name="cancle">取消</string>
+    <string name="confrim">确认</string>
+    <string name="apple_permission_success">已申请权限</string>
+    <string name="apple_permission_fail">已拒绝权限</string>
 </resources>
