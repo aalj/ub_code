@@ -14,9 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,7 +57,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     private TextView searchBtnAction = null;
     private RecyclerView list = null;
 
-//    ShapeLoadingDialog shapeLoadingDialog;
+    //    ShapeLoadingDialog shapeLoadingDialog;
     BaseRecyclerAdapter<SearchLineBean> recyclerAdapter = null;
 
 
@@ -212,11 +215,21 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         });
 
 
-
-//        shapeLoadingDialog=new ShapeLoadingDialog(mActivity);
-//        shapeLoadingDialog.setLoadingText(getResources().getString(R.string.loading));
-//        shapeLoadingDialog.setCanceledOnTouchOutside(false);
-
+        lineNum.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_UP) {
+                    // 先隐藏键盘
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(HomeActivity.this.getCurrentFocus()
+                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    //调用View 的自点击方法
+                    searchBtnAction.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -238,13 +251,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         if (R.id.home_search_btn_action == id) {  //搜索触发
 //            shapeLoadingDialog.show();
 
-            String lineNumStr = lineNum.getText().toString().trim();
-            if (!TextUtils.isEmpty(lineNumStr)) {
-                getPresenter().getTotalLines(lineNumStr);
-                Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();
-            }
+            search();
 
         } else if (R.id.home_search_icon_lay == id) {//显示搜索框
             setSearchShowOrHint(false);
@@ -252,6 +259,16 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         } else if (R.id.search_text_delete == id) {//删除文字按钮
             lineNum.setText("");
 
+        }
+    }
+
+    private void search() {
+        String lineNumStr = lineNum.getText().toString().trim();
+        if (!TextUtils.isEmpty(lineNumStr)) {
+            getPresenter().getTotalLines(lineNumStr);
+            Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -302,5 +319,6 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
 
         }
     };
+
 
 }

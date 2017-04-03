@@ -18,4 +18,6 @@
     <string name="confrim">确认</string>
     <string name="apple_permission_success">已申请权限</string>
     <string name="apple_permission_fail">已拒绝权限</string>
+    <string name="hint">输入公交番号（快线，高峰，游，夜）</string>
+    <string name="index_info">常用公交线路</string>
 </resources>
