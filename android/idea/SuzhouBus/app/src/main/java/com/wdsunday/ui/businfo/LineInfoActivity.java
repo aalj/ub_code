@@ -4,23 +4,29 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.framwork.support.view.MvpActivity;
 import com.wdsunday.bus.R;
 import com.wdsunday.database.bean.LineInfoBean;
+import com.wdsunday.database.bean.SearchLineBean;
+import com.wdsunday.ui.businfo.mvc.LineView;
+import com.wdsunday.ui.businfo.mvc.LinePresenter;
 import com.wdsunday.ui.home.HomeActivity;
-import com.wdsunday.utils.wight.ShapeLoadingDialog;
+import com.wdsunday.utils.wight.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineInfoActivity extends AppCompatActivity{
+public class LineInfoActivity extends MvpActivity<LineView,LinePresenter>
+implements LineView{
     private Activity mActivity;
     private ListView listL_lineinfo  = null;
     MyList adapter = null;
@@ -68,23 +74,36 @@ public class LineInfoActivity extends AppCompatActivity{
 
 
     public void initIntent(){
+
+
         Intent intent = getIntent();
-            List<LineInfoBean> lineInfoBeen = null;
+        SearchLineBean lineInfoBeen = null;
         if(intent.hasExtra(HomeActivity.LINEINFO_BUNDLE)){
             Bundle bundleExtra = intent.getBundleExtra(HomeActivity.LINEINFO_BUNDLE);
-            lineInfoBeen  = (List<LineInfoBean>) bundleExtra.get(HomeActivity.LINEINFO);
+            lineInfoBeen  = (SearchLineBean) bundleExtra.get(HomeActivity.LINEINFO);
         }else{
             finish();
             return;
         }
 
-        if(lineInfoBeen== null&& lineInfoBeen.size()<=0){
+        if(lineInfoBeen== null){
             finish();
             return;
         }
+        getPresenter().getLineInfo(lineInfoBeen.link);
+
+
+
+    }
+
+    @Override
+    public LinePresenter createPresenter() {
+        return new LinePresenter(this);
+    }
+
+    @Override
+    public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
         adapter.setData(lineInfoBeen);
-
-
     }
 
     class MyList extends BaseAdapter {
@@ -149,5 +168,30 @@ public class LineInfoActivity extends AppCompatActivity{
         }
 
 
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.collection, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.collection) {
+            ToastUtils.showShort(this,"点击菜单");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

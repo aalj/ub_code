@@ -17,8 +17,5 @@ public class HomeModel extends MvpBaseModel {
 
     }
 
-    public void getLineInfo(String param , SendData sendData, Context context){
-        HttpManger.useOkHttpGet(param,sendData,context);
 
-    }
 }

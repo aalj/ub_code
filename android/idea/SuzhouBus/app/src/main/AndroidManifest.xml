@@ -25,7 +25,11 @@
         <activity
             android:name="com.wdsunday.ui.TestActionActivity"
             android:label="@string/title_activity_test_action"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+
+
+        </activity>
         <activity android:name="com.wdsunday.ui.other.NotNetworkActivity"></activity>
     </application>
 

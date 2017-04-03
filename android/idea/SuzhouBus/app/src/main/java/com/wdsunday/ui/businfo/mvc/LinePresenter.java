@@ -1,4 +1,4 @@
-package com.wdsunday.ui.home.mvp;
+package com.wdsunday.ui.businfo.mvc;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,46 +6,44 @@ import android.content.Context;
 import com.framwork.mvpbase.presenter.impl.MvpBasePresenter;
 import com.wdsunday.database.ParsesHomeData;
 import com.wdsunday.database.bean.LineInfoBean;
-import com.wdsunday.database.bean.SearchLineBean;
 import com.wdsunday.http.SendData;
+import com.wdsunday.ui.home.mvp.HomeModel;
 
 import java.util.List;
 import java.util.TimerTask;
 
 /**
- * Created by liangjun on 2017/2/3.
+ * Created by liangjun on 2017/4/3.
  */
 
-public class HomePresenter extends MvpBasePresenter<HomeView> {
+public class LinePresenter extends MvpBasePresenter<LineView> {
 
-    private HomeModel totalModel;
+
+    private LineModel    lineModel;
     private Context context;
-
-    public HomePresenter(Context context) {
+    public LinePresenter(Context context) {
         super(context);
-        this.totalModel = new HomeModel();
-        this.context = context;
+       this. context = context;
+        lineModel = new LineModel() ;
     }
+    public void getLineInfo(String param) {
 
-
-    public void getTotalLines(String lineNum) {
-        totalModel.getTotal(lineNum,new SendData() {
+        lineModel.getLineInfo(param, new SendData() {
             @Override
             public void sendString(String data) {
                 ParsesHomeData parsesHomeData = new ParsesHomeData(data);
-                final List<SearchLineBean> lineBeens = parsesHomeData.parseHtmlSearchLine();
+                final List<LineInfoBean> lineInfoBeans = parsesHomeData.parseHtmlLineInfo();
+
+
                 ((Activity) context).runOnUiThread(new TimerTask() {
                     @Override
                     public void run() {
-                        getView().getTotalLines(lineBeens);
-
+                        getView().getLineInfo(lineInfoBeans);
                     }
                 });
             }
         },context);
+
     }
-
-
-
 
 }

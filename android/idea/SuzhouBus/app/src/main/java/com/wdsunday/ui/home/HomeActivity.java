@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,14 +24,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.framwork.support.view.MvpActivity;
-import com.wdsunday.bus.R;
 import com.wdsunday.adapter.BaseRecyclerAdapter;
 import com.wdsunday.adapter.RecyclerViewHolder;
+import com.wdsunday.bus.R;
 import com.wdsunday.database.bean.LineInfoBean;
 import com.wdsunday.database.bean.SearchLineBean;
 import com.wdsunday.ui.businfo.LineInfoActivity;
@@ -46,18 +45,18 @@ import static android.view.View.GONE;
 
 public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         implements NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener, HomeView, AdapterView.OnItemClickListener {
+        View.OnClickListener, HomeView {
     private Activity mActivity;
     private List<SearchLineBean> lineBeans = null;
 
     private EditText lineNum;
-    private RelativeLayout searchIconLay = null;
+    private LinearLayout searchIconLay = null;
     private LinearLayout searchActionLay = null;
     private ImageView searchTextDelete = null;
     private TextView searchBtnAction = null;
     private RecyclerView list = null;
 
-    //    ShapeLoadingDialog shapeLoadingDialog;
+    CardView cardView;
     BaseRecyclerAdapter<SearchLineBean> recyclerAdapter = null;
 
 
@@ -143,11 +142,11 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         return true;
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        getPresenter().getLineInfo(lineBeans.get(position).link);
-    }
+// TODO: 2017/4/3 转移
+//    @Override
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        getPresenter().getLineInfo(lineBeans.get(position).link);
+//    }
 
     private void initView() {
         /*
@@ -158,10 +157,11 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
          */
 
         //初始刷控件
-        searchIconLay = (RelativeLayout) findViewById(R.id.home_search_icon_lay);
+        searchIconLay = (LinearLayout) findViewById(R.id.home_search_icon_lay);
         searchActionLay = (LinearLayout) findViewById(R.id.search_action_lay);
         searchTextDelete = (ImageView) findViewById(R.id.search_text_delete);
         searchBtnAction = (TextView) findViewById(R.id.home_search_btn_action);
+        cardView = (CardView) findViewById(R.id.college);
         lineNum = (EditText) findViewById(R.id.linenum);
 
         list = (RecyclerView) findViewById(R.id.list);
@@ -172,6 +172,10 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         //初始化控件的显示与隐藏
         searchTextDelete.setVisibility(GONE);
         searchBtnAction.setVisibility(GONE);
+
+
+        cardView.setVisibility(View.VISIBLE);
+        list.setVisibility(View.GONE);
 
         lineNum.addTextChangedListener(textWatcher);
 
@@ -210,7 +214,15 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         recyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int pos) {
-                getPresenter().getLineInfo(lineBeans.get(pos).link);
+
+                // TODO: 2017/4/3 换成页面跳转
+                Intent intent = new Intent(mActivity, LineInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(LINEINFO, (Serializable) lineBeans.get(pos));
+                intent.putExtra(LINEINFO_BUNDLE, bundle);
+                startActivity(intent);
+
+//                getPresenter().getLineInfo(lineBeans.get(pos).link);
             }
         });
 
@@ -274,19 +286,21 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
 
     @Override
     public void getTotalLines(List<SearchLineBean> lineBeens) {
-//        shapeLoadingDialog.dismiss();
+        cardView.setVisibility(View.GONE);
+        list.setVisibility(View.VISIBLE);
+
         this.lineBeans = lineBeens;
         recyclerAdapter.addList(lineBeens);
     }
 
-    @Override
-    public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
-        Intent intent = new Intent(mActivity, LineInfoActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(LINEINFO, (Serializable) lineInfoBeen);
-        intent.putExtra(LINEINFO_BUNDLE, bundle);
-        startActivity(intent);
-    }
+//    @Override
+//    public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
+//        Intent intent = new Intent(mActivity, LineInfoActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(LINEINFO, (Serializable) lineInfoBeen);
+//        intent.putExtra(LINEINFO_BUNDLE, bundle);
+//        startActivity(intent);
+//    }
 
     @Override
     public HomePresenter createPresenter() {

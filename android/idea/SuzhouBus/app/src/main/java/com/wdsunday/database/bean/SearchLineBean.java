@@ -1,9 +1,11 @@
 package com.wdsunday.database.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by liang on 2017/1/1.
  */
-public class SearchLineBean {
+public class SearchLineBean implements Serializable{
     public String lineName;
     public String pathName;
     public String link;

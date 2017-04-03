@@ -14,7 +14,6 @@ public interface HomeView extends MvpView {
 
     void getTotalLines(List<SearchLineBean> lineBeens);
 
-    void getLineInfo(List<LineInfoBean> lineInfoBeen);
 
 
 }
