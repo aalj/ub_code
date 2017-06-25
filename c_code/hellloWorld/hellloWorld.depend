@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1498360348 source:/home/stone/workspace/oneself_workspace/c_code/hellloWorld/main.c
+	<stdio.h>
+	<stdlib.h>
+	<float.h>
+
+1498359631 source:/home/stone/workspace/oneself_workspace/c_code/hellloWorld/main2.c
+	<stdio.h>
+
