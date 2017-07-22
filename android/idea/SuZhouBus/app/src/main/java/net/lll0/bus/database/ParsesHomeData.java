@@ -8,6 +8,7 @@ import net.lll0.bus.database.bean.SearchLineBean;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ParsesHomeData {
     public List<SearchLineBean> parseHtmlSearchLine() {
 
         List<SearchLineBean> lineBeans = new ArrayList<>();
+
         Elements spanDiv = doc.select("span").select("table");
         if (spanDiv.size() <= 0) {
             SearchLineBean lineBean = new SearchLineBean();
@@ -61,6 +63,45 @@ public class ParsesHomeData {
                 lineBeans.add(lineBean);
             }
             lineBean = null;
+        }
+        return lineBeans;
+
+    }
+
+    public List<SearchLineBean> parseHtmlSearchLineV2() {
+
+        List<SearchLineBean> lineBeans = new ArrayList<>();
+
+        Elements dl = doc.select("dl");
+        for (int i = 0; i < dl.size(); i++) {
+            Elements a = dl.get(i).select("a");
+            SearchLineBean lineBean = new SearchLineBean();
+
+            for (Element element : a) {
+                if ("icomoon star1".equals(element.attr("class"))) {
+                    String startLineId = element.attr("lineID");
+                    String endLineId = element.attr("roLine");
+                    lineBean.startLineID = startLineId;
+                    lineBean.endLineID = endLineId;
+                }
+                if ("istationList fix".equals(element.attr("class"))) {
+                    lineBean.link = element.attr("href");
+
+                    String b = element.select("b").text();
+                    Elements p1 = element.select("p");
+                    String p = "";
+                    if (p1.size() > 1) {
+                        p = p1.get(1).text();
+                    }
+                    if (TextUtils.isEmpty(b)&&TextUtils.isEmpty(p)) {
+                        continue;
+                    }
+                    lineBean.pathName = p;
+                    lineBean.lineName = b;
+
+                }
+            }
+            lineBeans.add(lineBean);
         }
         return lineBeans;
 
@@ -107,6 +148,37 @@ public class ParsesHomeData {
                 }
                 lineBeans.add(lineBean);
                 lineBean = null;
+            }
+        }
+        return lineBeans;
+    }
+
+    public List<LineInfoBean> parseHtmlLineInfoV2() {
+        List<LineInfoBean> lineBeans = new ArrayList<>();
+        Elements classDiv = doc.getElementsByClass("ldItem");
+
+        for (int i = 0; i < classDiv.size(); i++) {
+            Element element = classDiv.get(i);
+            LineInfoBean lineBean = null;
+            if ("ldItem fix".equals(element.attr("class"))) {
+                if (lineBean == null) {
+                    lineBean = new LineInfoBean();
+                }
+                String id = element.attr("id");
+                lineBean.stationId = id;
+                Elements b = element.select("b");
+                if (b.size() > 0) {
+                    lineBean.index = b.get(0).text();
+                }
+                Elements a = element.select("a");
+                String href = a.attr("href");
+                String text = a.text();
+                if (TextUtils.isEmpty(href) && TextUtils.isEmpty(text)) {
+                    continue;
+                }
+                lineBean.lineUrl = href;
+                lineBean.stationName = text;
+                lineBeans.add(lineBean);
             }
         }
         return lineBeans;

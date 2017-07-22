@@ -1,6 +1,7 @@
 package net.lll0.bus.ui.businfo.mvc;
 
 
+import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
 import net.lll0.framwork.mvpbase.view.MvpView;
 import net.lll0.bus.database.bean.LineInfoBean;
 
@@ -13,5 +14,6 @@ import java.util.List;
 public interface LineView extends MvpView {
 
     void getLineInfo(List<LineInfoBean> lineInfoBeen);
+    void getLineRealTimeInfo(RealTImeInfoEntity realTImeInfoEntity);
 
 }

@@ -276,7 +276,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     private void search() {
         String lineNumStr = lineNum.getText().toString().trim();
         if (!TextUtils.isEmpty(lineNumStr)) {
-            getPresenter().getTotalLines(lineNumStr);
+            getPresenter().getTotalLines("line.php?line="+lineNumStr);
             Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();

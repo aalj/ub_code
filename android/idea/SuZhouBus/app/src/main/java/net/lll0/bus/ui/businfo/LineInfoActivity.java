@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import net.lll0.bus.contstant.BaseConsTent;
+import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
 import net.lll0.framwork.support.view.MvpActivity;
 import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.database.bean.LineInfoBean;
@@ -26,12 +28,18 @@ import net.lll0.bus.utils.wight.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineInfoActivity extends MvpActivity<LineView,LinePresenter>
-implements LineView{
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+
+public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
+        implements LineView {
     private Activity mActivity;
-    private ListView listL_lineinfo  = null;
+    private ListView listL_lineinfo = null;
     MyList adapter = null;
     SwipeRefreshLayout swipeRefreshLayout;
+    RealTImeInfoEntity realTImeInfoEntity;
+    List<LineInfoBean> lineInfoBeens;
+    SearchLineBean lineInfoBeen = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +60,9 @@ implements LineView{
     }
 
 
-
-
     private void initView() {
         listL_lineinfo = (ListView) findViewById(R.id.listL_lineinfo);
-          adapter = new MyList();
+        adapter = new MyList();
         listL_lineinfo.setAdapter(adapter);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
@@ -70,29 +76,31 @@ implements LineView{
         });
 
 
-
     }
 
 
-    public void initIntent(){
+    public void initIntent() {
 
 
         Intent intent = getIntent();
-        SearchLineBean lineInfoBeen = null;
-        if(intent.hasExtra(HomeActivity.LINEINFO_BUNDLE)){
+
+        if (intent.hasExtra(HomeActivity.LINEINFO_BUNDLE)) {
             Bundle bundleExtra = intent.getBundleExtra(HomeActivity.LINEINFO_BUNDLE);
-            lineInfoBeen  = (SearchLineBean) bundleExtra.get(HomeActivity.LINEINFO);
-        }else{
+            lineInfoBeen = (SearchLineBean) bundleExtra.get(HomeActivity.LINEINFO);
+        } else {
             finish();
             return;
         }
 
-        if(lineInfoBeen== null){
+        if (lineInfoBeen == null) {
             finish();
             return;
         }
         getPresenter().getLineInfo(lineInfoBeen.link);
-
+        RequestBody formBody = new FormBody.Builder()
+                .add("lineID", lineInfoBeen.startLineID)
+                .build();
+        getPresenter().getLineRealTimeInfo(BaseConsTent.HTTP_URL_REAL_TIME, formBody);
 
 
     }
@@ -104,8 +112,43 @@ implements LineView{
 
     @Override
     public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
-        adapter.setData(lineInfoBeen);
+        this.lineInfoBeens = lineInfoBeen;
+        if (lineInfoBeen!=null&&realTImeInfoEntity!=null) {
+            buildData(realTImeInfoEntity,lineInfoBeen);
+        }
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("lineID", this.lineInfoBeen.startLineID)
+                .build();
+        getPresenter().getLineRealTimeInfo(BaseConsTent.HTTP_URL_REAL_TIME, formBody);
     }
+
+    @Override
+    public void getLineRealTimeInfo(RealTImeInfoEntity realTImeInfoEntity) {
+        this.realTImeInfoEntity = realTImeInfoEntity;
+        if (lineInfoBeens !=null&&realTImeInfoEntity!=null) {
+            buildData(realTImeInfoEntity, lineInfoBeens);
+        }
+
+    }
+
+
+    private void buildData(RealTImeInfoEntity realTImeInfoEntity,List<LineInfoBean> lineInfoBeen){
+
+        for (LineInfoBean lineInfoBean : lineInfoBeen) {
+            for (RealTImeInfoEntity.DataBean dataBean : realTImeInfoEntity.getData()) {
+                if (lineInfoBean.stationId.equals(dataBean.getID())) {
+                    lineInfoBean.time=dataBean.getInTime();
+                    lineInfoBean.carNumber=dataBean.getBusInfo();
+                    lineInfoBean.stationNum=dataBean.getCode();
+                }
+            }
+        }
+        adapter.setData(lineInfoBeen);
+
+    }
+
+
 
     class MyList extends BaseAdapter {
         List<LineInfoBean> list = new ArrayList<>();
@@ -114,7 +157,7 @@ implements LineView{
             if (list != null && list.size() > 0) {
                 this.list.clear();
                 this.list.addAll(list);
-            }else{
+            } else {
                 this.list.clear();
             }
             notifyDataSetChanged();
@@ -165,12 +208,10 @@ implements LineView{
             public TextView time;
 
 
-
         }
 
 
     }
-
 
 
     @Override
@@ -189,7 +230,7 @@ implements LineView{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.collection) {
-            ToastUtils.showShort(this,"点击菜单");
+            ToastUtils.showShort(this, "点击菜单");
             return true;
         }
 
