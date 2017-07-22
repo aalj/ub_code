@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import net.lll0.bus.contstant.BaseConsTent;
 import net.lll0.bus.exception.NotNetwork;
 import net.lll0.bus.ui.other.NotNetworkActivity;
+import net.lll0.bus.utils.WaitLoading;
 import net.lll0.bus.utils.wight.ShapeLoadingDialog;
 
 import java.io.IOException;
@@ -70,9 +71,7 @@ public class HttpManger {
             context.startActivity(intent);
         }
 
-        shapeLoadingDialog = new ShapeLoadingDialog(context);
-        shapeLoadingDialog.setCanceledOnTouchOutside(false);
-        shapeLoadingDialog.show();
+        WaitLoading.getWaitLoading(context).show(false);
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -93,7 +92,6 @@ public class HttpManger {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    shapeLoadingDialog.dismiss();
                     String string = response.body().string();
                     sendData.sendString(string);
                 }
@@ -101,15 +99,16 @@ public class HttpManger {
         });
     }
 
-    public static void useOkHttpPost(String param, RequestBody formBody, final SendData sendData, Context context) {
+    public static void useOkHttpPost(String param,
+                                     RequestBody formBody,
+                                     final SendData sendData,
+                                     Context context) {
         if (!isNetworkAvailable(context)) {
             Intent intent = new Intent(context, NotNetworkActivity.class);
             context.startActivity(intent);
         }
 
-        shapeLoadingDialog = new ShapeLoadingDialog(context);
-        shapeLoadingDialog.setCanceledOnTouchOutside(false);
-        shapeLoadingDialog.show();
+        WaitLoading.getWaitLoading(context).show(false);
 
 //        // 表单提交 这种能满足大部分的需求
 //        RequestBody formBody = new FormBody.Builder()
@@ -135,7 +134,6 @@ public class HttpManger {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    shapeLoadingDialog.dismiss();
                     String string = response.body().string();
                     sendData.sendString(string);
                 }

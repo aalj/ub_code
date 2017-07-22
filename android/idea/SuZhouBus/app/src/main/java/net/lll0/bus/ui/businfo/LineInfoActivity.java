@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import net.lll0.bus.contstant.BaseConsTent;
 import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
+import net.lll0.bus.utils.WaitLoading;
 import net.lll0.framwork.support.view.MvpActivity;
 import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.database.bean.LineInfoBean;
@@ -112,6 +113,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
+        WaitLoading.getWaitLoading(mActivity).dismiss();
         this.lineInfoBeens = lineInfoBeen;
         if (lineInfoBeen!=null&&realTImeInfoEntity!=null) {
             buildData(realTImeInfoEntity,lineInfoBeen);
@@ -125,6 +127,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public void getLineRealTimeInfo(RealTImeInfoEntity realTImeInfoEntity) {
+        WaitLoading.getWaitLoading(mActivity).dismiss();
         this.realTImeInfoEntity = realTImeInfoEntity;
         if (lineInfoBeens !=null&&realTImeInfoEntity!=null) {
             buildData(realTImeInfoEntity, lineInfoBeens);
