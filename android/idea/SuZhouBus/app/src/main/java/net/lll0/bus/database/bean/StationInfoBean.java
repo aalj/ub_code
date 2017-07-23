@@ -13,6 +13,16 @@ public class StationInfoBean {
      * 
      */
     public  String realTimeInfo;
-
-
+    /**
+     * 公交始发站
+     */
+    public String startStation;
+    /**
+     * 对应公交的详细的查询链接
+     */
+    public String lineUrl;
+    /**
+     * 公交的id
+     */
+    public String lineId;
 }
