@@ -4,16 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.support.v7.widget.RecyclerView;
 
 
+import net.lll0.bus.adapter.BaseRecyclerAdapter;
+import net.lll0.bus.adapter.RecyclerViewHolder;
 import net.lll0.bus.contstant.BaseConsTent;
 import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
 import net.lll0.bus.utils.ToastUtil;
@@ -34,14 +39,15 @@ import okhttp3.FormBody;
 import okhttp3.RequestBody;
 
 public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
-        implements LineView {
+        implements LineView, BaseRecyclerAdapter.OnItemClickListener {
     private Activity mActivity;
-    private ListView listL_lineinfo = null;
+    private RecyclerView listLlineinfo = null;
     MyList adapter = null;
     SwipeRefreshLayout swipeRefreshLayout;
     RealTImeInfoEntity realTImeInfoEntity;
     List<LineInfoBean> lineInfoBeens;
     SearchLineBean lineInfoBeen = null;
+    BaseRecyclerAdapter baseRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +69,8 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
 
     private void initView() {
-        listL_lineinfo = (ListView) findViewById(R.id.listL_lineinfo);
+        listLlineinfo = (RecyclerView) findViewById(R.id.listL_lineinfo);
         adapter = new MyList();
-        listL_lineinfo.setAdapter(adapter);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,7 +81,35 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+        listLlineinfo.setItemAnimator(new DefaultItemAnimator());
+        listLlineinfo.setLayoutManager(new LinearLayoutManager(this));
 
+        baseRecyclerAdapter = new BaseRecyclerAdapter<LineInfoBean>(mActivity, lineInfoBeens) {
+            @Override
+            protected int getItemLayoutId(int viewType) {
+                return R.layout.item_lineinfo;
+            }
+
+            @Override
+            protected void bindData(RecyclerViewHolder holder, int position, LineInfoBean item) {
+                holder.getView(R.id.lineinfo_index).setBackgroundResource(R.mipmap.bg_round_blue_32);
+
+                holder.setText(R.id.lineinfo_index, item.index);
+                holder.setText(R.id.lineinfo_station_name, item.stationName);
+                holder.setText(R.id.lineinfo_station_code, item.stationNum);
+                holder.setText(R.id.lineinfo_bus_num, item.carNumber);
+                holder.setText(R.id.lineinfo_intime, item.time);
+                if (!TextUtils.isEmpty(item.time)) {
+                    holder.getView(R.id.lineinfo_index).setBackgroundResource(R.mipmap.bg_round_yellow_32);
+                }
+            }
+        };
+
+        if (baseRecyclerAdapter != null) {
+            listLlineinfo.setAdapter(baseRecyclerAdapter);
+        }
+
+        baseRecyclerAdapter.setOnItemClickListener(this);
 
     }
 
@@ -149,14 +182,19 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
                 }
             }
         }
-        adapter.setData(lineInfoBeen);
-
+        baseRecyclerAdapter.addList(lineInfoBeen);
     }
 
     @Override
     public void getError(String errorMessge) {
         WaitLoading.dismiss();
         ToastUtil.showLongToast(mActivity, errorMessge);
+    }
+
+    @Override
+    public void onItemClick(View itemView, int pos) {
+        ToastUtil.showLongToast(mActivity,"点击");
+
     }
 
 

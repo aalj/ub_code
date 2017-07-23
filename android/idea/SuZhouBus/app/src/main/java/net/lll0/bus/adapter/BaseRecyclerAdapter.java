@@ -29,7 +29,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_HEADER = -1;
     private static final int TYPE_FOOTER = 1;
-    protected final List<T> mItems;
+    protected   List<T> mItems;
     protected final Context mContext;
     protected LayoutInflater mInflater;
     private OnItemClickListener mClickListener;
@@ -47,6 +47,16 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         mInflater = LayoutInflater.from(ctx);
         //判断是否加载头部，同时对数据源做处理，给头部和底部预留出显得位置
         isAddHeadAndFood();
+
+    }
+
+    public void setDate(List<T> list){
+        if (mItems!=null) {
+            mItems.clear();
+        }
+
+        mItems = (list != null) ? list : new ArrayList<T>();
+        notifyDataSetChanged();
     }
 
     private void isAddHeadAndFood() {

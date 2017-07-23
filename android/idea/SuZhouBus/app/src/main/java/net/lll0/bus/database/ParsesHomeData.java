@@ -93,7 +93,7 @@ public class ParsesHomeData {
                     if (p1.size() > 1) {
                         p = p1.get(1).text();
                     }
-                    if (TextUtils.isEmpty(b)&&TextUtils.isEmpty(p)) {
+                    if (TextUtils.isEmpty(b) && TextUtils.isEmpty(p)) {
                         continue;
                     }
                     lineBean.pathName = p;
@@ -171,9 +171,9 @@ public class ParsesHomeData {
                     lineBean.index = b.get(0).text();
                 }
                 Elements a = element.select("a");
-                if (a.size()==0&&b.size()==3) {
+                if (a.size() == 0 && b.size() == 3) {
                     lineBean.stationName = b.get(2).text();
-                lineBeans.add(lineBean);
+                    lineBeans.add(lineBean);
                     continue;
                 }
                 String href = a.attr("href");
@@ -183,9 +183,14 @@ public class ParsesHomeData {
                 }
                 lineBean.lineUrl = href;
                 lineBean.stationName = text;
+                lineBeans.add(lineBean);
             }
         }
         return lineBeans;
     }
+
+
+
+
 
 }
