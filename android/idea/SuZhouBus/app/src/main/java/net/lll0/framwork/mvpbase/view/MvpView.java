@@ -5,4 +5,5 @@ package net.lll0.framwork.mvpbase.view;
  */
 
 public interface MvpView {
+    void getError(String errorMessge);
 }

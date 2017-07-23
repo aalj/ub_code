@@ -5,18 +5,14 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-
 import net.lll0.bus.contstant.BaseConsTent;
 import net.lll0.bus.exception.NotNetwork;
 import net.lll0.bus.ui.other.NotNetworkActivity;
-import net.lll0.bus.utils.WaitLoading;
-import net.lll0.bus.utils.wight.ShapeLoadingDialog;
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -28,16 +24,11 @@ import okhttp3.Response;
 public class HttpManger {
 
 
-    static ShapeLoadingDialog shapeLoadingDialog;
-
     public static void useOkHttp(String url, final SendData sendData, Context context) {
         if (!isNetworkAvailable(context)) {
             Intent intent = new Intent(context, NotNetworkActivity.class);
             context.startActivity(intent);
         }
-        shapeLoadingDialog = new ShapeLoadingDialog(context);
-        shapeLoadingDialog.setCanceledOnTouchOutside(false);
-        shapeLoadingDialog.show();
 
 
         OkHttpClient client = new OkHttpClient();
@@ -49,14 +40,13 @@ public class HttpManger {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                shapeLoadingDialog.dismiss();
+                sendData.fail(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    shapeLoadingDialog.dismiss();
-                    sendData.sendString(response.body().string());
+                    sendData.success(response.body().string());
                 }
             }
         });
@@ -71,29 +61,24 @@ public class HttpManger {
             context.startActivity(intent);
         }
 
-        WaitLoading.getWaitLoading(context).show(false);
+
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(BaseConsTent.HTTP_URL + param)
-//                .url("http://gank.io/api/data/Android/10/1")
                 .build();
-//        Request request = new Request.Builder()
-//                .url("http://www.szjt.gov.cn/apts/" + param)
-//                .get()
-//                .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                shapeLoadingDialog.dismiss();
+                sendData.fail(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String string = response.body().string();
-                    sendData.sendString(string);
+                    sendData.success(string);
                 }
             }
         });
@@ -108,7 +93,7 @@ public class HttpManger {
             context.startActivity(intent);
         }
 
-        WaitLoading.getWaitLoading(context).show(false);
+
 
 //        // 表单提交 这种能满足大部分的需求
 //        RequestBody formBody = new FormBody.Builder()
@@ -128,14 +113,14 @@ public class HttpManger {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                shapeLoadingDialog.dismiss();
+                sendData.fail(e);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String string = response.body().string();
-                    sendData.sendString(string);
+                    sendData.success(string);
                 }
             }
         });

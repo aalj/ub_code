@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import net.lll0.bus.utils.ToastUtil;
+import net.lll0.bus.utils.WaitLoading;
 import net.lll0.framwork.support.view.MvpActivity;
 import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.adapter.BaseRecyclerAdapter;
@@ -276,6 +278,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     private void search() {
         String lineNumStr = lineNum.getText().toString().trim();
         if (!TextUtils.isEmpty(lineNumStr)) {
+            WaitLoading.show(false,mActivity);
             getPresenter().getTotalLines("line.php?line="+lineNumStr);
             Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
         } else {
@@ -285,6 +288,8 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
 
     @Override
     public void getTotalLines(List<SearchLineBean> lineBeens) {
+        WaitLoading.dismiss();
+
         cardView.setVisibility(View.GONE);
         list.setVisibility(View.VISIBLE);
 
@@ -292,14 +297,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         recyclerAdapter.addList(lineBeens);
     }
 
-//    @Override
-//    public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
-//        Intent intent = new Intent(mActivity, LineInfoActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(LINEINFO, (Serializable) lineInfoBeen);
-//        intent.putExtra(LINEINFO_BUNDLE, bundle);
-//        startActivity(intent);
-//    }
+
 
     @Override
     public HomePresenter createPresenter() {
@@ -334,4 +332,10 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     };
 
 
+    @Override
+    public void getError(String errorMessge) {
+        WaitLoading.dismiss();
+        ToastUtil.showLongToast(mActivity,errorMessge);
+
+    }
 }

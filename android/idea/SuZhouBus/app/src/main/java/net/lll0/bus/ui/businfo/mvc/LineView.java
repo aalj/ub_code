@@ -16,4 +16,7 @@ public interface LineView extends MvpView {
     void getLineInfo(List<LineInfoBean> lineInfoBeen);
     void getLineRealTimeInfo(RealTImeInfoEntity realTImeInfoEntity);
 
+
+
+
 }

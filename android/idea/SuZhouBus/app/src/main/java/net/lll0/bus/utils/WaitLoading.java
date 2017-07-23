@@ -1,6 +1,8 @@
 package net.lll0.bus.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import net.lll0.bus.utils.wight.ShapeLoadingDialog;
 
@@ -10,42 +12,36 @@ import net.lll0.bus.utils.wight.ShapeLoadingDialog;
 
 public class WaitLoading {
 
-    private volatile static WaitLoading instance; //声明成 volatile
-    private static boolean isTouchDismiss;
-    private static Context context;
     private static ShapeLoadingDialog shapeLoadingDialog;
 
-    private WaitLoading() {
-    }
+    private static final  String SIMPLE_NAME = WaitLoading.class.getSimpleName();
 
-    public static WaitLoading getWaitLoading( Context pContext) {
-        context = pContext;
-        if (instance == null) {
-            synchronized (WaitLoading.class) {
-                if (instance == null) {
-                    instance = new WaitLoading();
-                    shapeLoadingDialog = new ShapeLoadingDialog(context);
-                }
-            }
-        }
-        return instance;
-    }
-
-
-    public void show(boolean isTouchDismis) {
+    public static  void show(boolean isTouchDismis, Activity activity) {
+        shapeLoadingDialog = new ShapeLoadingDialog(activity);
         if (shapeLoadingDialog != null) {
-        isTouchDismiss = isTouchDismis;
-            shapeLoadingDialog.setCanceledOnTouchOutside(false);
+            shapeLoadingDialog.setCanceledOnTouchOutside(isTouchDismis);
             shapeLoadingDialog.show();
 
         }
 
     }
 
-    public void dismiss() {
+    public static void dismiss() {
         if (shapeLoadingDialog != null) {
-
             shapeLoadingDialog.dismiss();
+        }
+    }
+
+
+    public static void  hide(){
+        if (shapeLoadingDialog!=null) {
+            try{
+                shapeLoadingDialog.dismiss();
+
+            }catch (Exception e ){
+                e.printStackTrace();
+                Log.e(SIMPLE_NAME, "hide  >  "+e.getMessage() );
+            }
         }
     }
 

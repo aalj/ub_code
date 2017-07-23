@@ -9,6 +9,8 @@
     <string name="title_activity_test_action">TestActionActivity</string>
     <string name="loading">加载中......</string>
     <string name="notnetwork">没有网络</string>
+    <string name="error">网络异常</string>
+
 
 
     <!--运行时权限-->

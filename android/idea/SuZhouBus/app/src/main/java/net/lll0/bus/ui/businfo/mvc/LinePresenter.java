@@ -7,6 +7,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
 import net.lll0.framwork.mvpbase.presenter.impl.MvpBasePresenter;
 import net.lll0.bus.database.ParsesHomeData;
@@ -38,7 +39,7 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
 
         lineModel.getLineInfo(param, new SendData() {
             @Override
-            public void sendString(String data) {
+            public void success(String data) {
                 ParsesHomeData parsesHomeData = new ParsesHomeData(data);
                 final List<LineInfoBean> lineInfoBeans = parsesHomeData.parseHtmlLineInfoV2();
 
@@ -50,6 +51,11 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
                     }
                 });
             }
+
+            @Override
+            public void fail(Exception e) {
+                error();
+            }
         }, context);
 
     }
@@ -58,7 +64,7 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
 
         lineModel.getLineRealTImeInfo(param, formBody, new SendData() {
             @Override
-            public void sendString(String data) {
+            public void success(String data) {
                 Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                 final RealTImeInfoEntity realTImeInfoEntity = gson.fromJson(data, RealTImeInfoEntity.class);
 
@@ -68,6 +74,11 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
                         getView().getLineRealTimeInfo(realTImeInfoEntity);
                     }
                 });
+            }
+
+            @Override
+            public void fail(Exception e) {
+                error();
             }
         }, context);
 

@@ -104,4 +104,9 @@ public class MvpLceViewImpl<M> implements MvpLceView<M> {
     public void loadData(boolean isPullRefresh) {
 
     }
+
+    @Override
+    public void getError(String errorMessge) {
+
+    }
 }

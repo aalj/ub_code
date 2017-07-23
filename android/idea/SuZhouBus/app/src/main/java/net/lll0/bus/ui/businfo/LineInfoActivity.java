@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import net.lll0.bus.contstant.BaseConsTent;
 import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
+import net.lll0.bus.utils.ToastUtil;
 import net.lll0.bus.utils.WaitLoading;
 import net.lll0.framwork.support.view.MvpActivity;
 import net.lll0.bus.suzhoubus.R;
@@ -97,6 +98,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
             finish();
             return;
         }
+        WaitLoading.show(false, mActivity);
         getPresenter().getLineInfo(lineInfoBeen.link);
         RequestBody formBody = new FormBody.Builder()
                 .add("lineID", lineInfoBeen.startLineID)
@@ -113,10 +115,10 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
-        WaitLoading.getWaitLoading(mActivity).dismiss();
         this.lineInfoBeens = lineInfoBeen;
-        if (lineInfoBeen!=null&&realTImeInfoEntity!=null) {
-            buildData(realTImeInfoEntity,lineInfoBeen);
+        if (lineInfoBeen != null && realTImeInfoEntity != null) {
+            WaitLoading.dismiss();
+            buildData(realTImeInfoEntity, lineInfoBeen);
         }
 
         RequestBody formBody = new FormBody.Builder()
@@ -127,23 +129,23 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public void getLineRealTimeInfo(RealTImeInfoEntity realTImeInfoEntity) {
-        WaitLoading.getWaitLoading(mActivity).dismiss();
         this.realTImeInfoEntity = realTImeInfoEntity;
-        if (lineInfoBeens !=null&&realTImeInfoEntity!=null) {
+        if (lineInfoBeens != null && realTImeInfoEntity != null) {
+            WaitLoading.dismiss();
             buildData(realTImeInfoEntity, lineInfoBeens);
         }
 
     }
 
 
-    private void buildData(RealTImeInfoEntity realTImeInfoEntity,List<LineInfoBean> lineInfoBeen){
+    private void buildData(RealTImeInfoEntity realTImeInfoEntity, List<LineInfoBean> lineInfoBeen) {
 
         for (LineInfoBean lineInfoBean : lineInfoBeen) {
             for (RealTImeInfoEntity.DataBean dataBean : realTImeInfoEntity.getData()) {
                 if (lineInfoBean.stationId.equals(dataBean.getID())) {
-                    lineInfoBean.time=dataBean.getInTime();
-                    lineInfoBean.carNumber=dataBean.getBusInfo();
-                    lineInfoBean.stationNum=dataBean.getCode();
+                    lineInfoBean.time = dataBean.getInTime();
+                    lineInfoBean.carNumber = dataBean.getBusInfo();
+                    lineInfoBean.stationNum = dataBean.getCode();
                 }
             }
         }
@@ -151,6 +153,11 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     }
 
+    @Override
+    public void getError(String errorMessge) {
+        WaitLoading.dismiss();
+        ToastUtil.showLongToast(mActivity, errorMessge);
+    }
 
 
     class MyList extends BaseAdapter {

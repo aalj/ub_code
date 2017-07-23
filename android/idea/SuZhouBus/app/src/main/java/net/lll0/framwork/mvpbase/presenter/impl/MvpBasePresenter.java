@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 
+import net.lll0.bus.suzhoubus.R;
 import net.lll0.framwork.mvpbase.presenter.MvpPresenter;
 import net.lll0.framwork.mvpbase.view.MvpView;
 
@@ -94,5 +95,9 @@ public class MvpBasePresenter<V extends MvpView> implements MvpPresenter<V> {
         }
     }
 
+
+    public void error(){
+        getView().getError(getContext().getResources().getString(R.string.error));
+    }
 
 }

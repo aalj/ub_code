@@ -35,7 +35,7 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
         //这里通过匿名内部类实现网络请求的回调 把数据返回回来
         totalModel.getTotal(lineNum,new SendData() {
             @Override
-            public void sendString(String data) {
+            public void success(String data) {
                 ParsesHomeData parsesHomeData = new ParsesHomeData(data);
                 final List<SearchLineBean> lineBeens = parsesHomeData.parseHtmlSearchLineV2();
                 ((Activity) context).runOnUiThread(new TimerTask() {
@@ -45,6 +45,11 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
 
                     }
                 });
+            }
+
+            @Override
+            public void fail(Exception e) {
+                error();
             }
         },context);
     }

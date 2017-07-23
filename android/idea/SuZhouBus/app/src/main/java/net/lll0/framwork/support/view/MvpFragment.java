@@ -59,4 +59,9 @@ public class MvpFragment <V extends MvpView,P extends MvpPresenter<V>>
     public boolean shouldInstanceBeRetained() {
         return false;
     }
+
+    @Override
+    public void getError(String errorMessge) {
+
+    }
 }

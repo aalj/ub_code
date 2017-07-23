@@ -171,6 +171,11 @@ public class ParsesHomeData {
                     lineBean.index = b.get(0).text();
                 }
                 Elements a = element.select("a");
+                if (a.size()==0&&b.size()==3) {
+                    lineBean.stationName = b.get(2).text();
+                lineBeans.add(lineBean);
+                    continue;
+                }
                 String href = a.attr("href");
                 String text = a.text();
                 if (TextUtils.isEmpty(href) && TextUtils.isEmpty(text)) {
@@ -178,7 +183,6 @@ public class ParsesHomeData {
                 }
                 lineBean.lineUrl = href;
                 lineBean.stationName = text;
-                lineBeans.add(lineBean);
             }
         }
         return lineBeans;
