@@ -10,9 +10,9 @@ public class StationInfoBean {
      */
     public String lineName;
     /**
-     * 
+     * 公交的实时信息
      */
-    public  String realTimeInfo;
+    public String realTimeInfo;
     /**
      * 公交始发站
      */

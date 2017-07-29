@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import net.lll0.bus.database.bean.LineInfoBean;
 import net.lll0.bus.database.bean.SearchLineBean;
+import net.lll0.bus.database.bean.StationInfoBean;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -187,6 +188,43 @@ public class ParsesHomeData {
             }
         }
         return lineBeans;
+    }
+
+
+    public List<StationInfoBean> parseHtmlStationToLineInfo() {
+        List<StationInfoBean> stationInfoBeen = new ArrayList<>();
+        StationInfoBean infoBean = new StationInfoBean();
+        Elements classDl = doc.getElementsByClass("stationList");
+
+        for (Element element : classDl) {
+            infoBean = new StationInfoBean();
+            //取公交的id
+            Elements a = element.select("a");
+            if (a.size()>1) {
+                infoBean.lineId=a.get(0).attr("lineID");
+                Element a2 = a.get(1);
+                infoBean.lineUrl=a2.attr("href");
+                Elements p = a2.select("p");
+                if (p.size()>0) {
+                    Elements b = p.select("b");
+                    int size = b.size();
+                    if (size>0) {
+                        infoBean.lineName = b.text();
+                    }
+                    infoBean.realTimeInfo= p.select("span").text();
+//                    if (size>1) {
+//                    }
+                }
+                if (p.size()>1) {
+                    infoBean.startStation = p.get(1).text();
+                }
+            }else{
+                continue;
+            }
+            stationInfoBeen.add(infoBean);
+        }
+
+        return stationInfoBeen;
     }
 
 

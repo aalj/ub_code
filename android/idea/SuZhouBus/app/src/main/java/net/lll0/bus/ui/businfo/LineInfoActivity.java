@@ -8,12 +8,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 import android.support.v7.widget.RecyclerView;
 
 
@@ -32,7 +30,6 @@ import net.lll0.bus.ui.businfo.mvc.LineView;
 import net.lll0.bus.ui.home.HomeActivity;
 import net.lll0.bus.utils.wight.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -40,12 +37,14 @@ import okhttp3.RequestBody;
 
 public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         implements LineView, BaseRecyclerAdapter.OnItemClickListener {
+
+    private static final String TAG=LineInfoActivity.class.getSimpleName();
+
     private Activity mActivity;
     private RecyclerView listLlineinfo = null;
-    MyList adapter = null;
     SwipeRefreshLayout swipeRefreshLayout;
     RealTImeInfoEntity realTImeInfoEntity;
-    List<LineInfoBean> lineInfoBeens;
+    List<LineInfoBean> lineInfoBeans;
     SearchLineBean lineInfoBeen = null;
     BaseRecyclerAdapter baseRecyclerAdapter;
 
@@ -70,7 +69,6 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     private void initView() {
         listLlineinfo = (RecyclerView) findViewById(R.id.listL_lineinfo);
-        adapter = new MyList();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -84,7 +82,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         listLlineinfo.setItemAnimator(new DefaultItemAnimator());
         listLlineinfo.setLayoutManager(new LinearLayoutManager(this));
 
-        baseRecyclerAdapter = new BaseRecyclerAdapter<LineInfoBean>(mActivity, lineInfoBeens) {
+        baseRecyclerAdapter = new BaseRecyclerAdapter<LineInfoBean>(mActivity, lineInfoBeans) {
             @Override
             protected int getItemLayoutId(int viewType) {
                 return R.layout.item_lineinfo;
@@ -148,7 +146,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public void getLineInfo(List<LineInfoBean> lineInfoBeen) {
-        this.lineInfoBeens = lineInfoBeen;
+        this.lineInfoBeans = lineInfoBeen;
         if (lineInfoBeen != null && realTImeInfoEntity != null) {
             WaitLoading.dismiss();
             buildData(realTImeInfoEntity, lineInfoBeen);
@@ -163,9 +161,9 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
     @Override
     public void getLineRealTimeInfo(RealTImeInfoEntity realTImeInfoEntity) {
         this.realTImeInfoEntity = realTImeInfoEntity;
-        if (lineInfoBeens != null && realTImeInfoEntity != null) {
+        if (lineInfoBeans != null && realTImeInfoEntity != null) {
             WaitLoading.dismiss();
-            buildData(realTImeInfoEntity, lineInfoBeens);
+            buildData(realTImeInfoEntity, lineInfoBeans);
         }
 
     }
@@ -194,72 +192,11 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
     @Override
     public void onItemClick(View itemView, int pos) {
         ToastUtil.showLongToast(mActivity,"点击");
-
+        LineInfoBean lineInfoBean = lineInfoBeans.get(pos);
+        Log.e(TAG, "onItemClick: " );
     }
 
 
-    class MyList extends BaseAdapter {
-        List<LineInfoBean> list = new ArrayList<>();
-
-        public void setData(List<LineInfoBean> list) {
-            if (list != null && list.size() > 0) {
-                this.list.clear();
-                this.list.addAll(list);
-            } else {
-                this.list.clear();
-            }
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return list.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            HolderView holderView = null;
-            if (view == null) {
-                view = View.inflate(mActivity, R.layout.lineinfo_item, null);
-                holderView = new HolderView();
-                holderView.stationName = (TextView) view.findViewById(R.id.station_name);
-                holderView.stationNum = (TextView) view.findViewById(R.id.station_num);
-                holderView.carNumber = (TextView) view.findViewById(R.id.car_number);
-                holderView.time = (TextView) view.findViewById(R.id.time);
-                view.setTag(holderView);
-            } else {
-                holderView = (HolderView) view.getTag();
-            }
-
-            holderView.stationName.setText(list.get(i).stationName);
-            holderView.stationNum.setText(list.get(i).stationNum);
-            holderView.carNumber.setText(list.get(i).carNumber);
-            holderView.time.setText(list.get(i).time);
-
-            return view;
-        }
-
-        class HolderView {
-            public TextView stationName;
-            public TextView stationNum;
-            public TextView carNumber;
-            public TextView time;
-
-
-        }
-
-
-    }
 
 
     @Override
