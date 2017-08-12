@@ -1,3 +1,5 @@
+package net.lll0.bus;
+
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Property;
@@ -11,7 +13,7 @@ public class MyDaoGenerator {
     public static void main(String[] args) throws Exception {
         // 正如你所见的，你创建了一个用于添加实体（Entity）的模式（Schema）对象。
         // 两个参数分别代表：数据库版本号与自动生成代码的包路径。
-        Schema schema = new Schema(1, "com.wdsunday.database");
+        Schema schema = new Schema(1, "net.lll0.bus.database");
 //      当然，如果你愿意，你也可以分别指定生成的 Bean 与 DAO 类所在的目录，只要如下所示：
 //      Schema schema = new Schema(1, "me.itangqi.bean");
 //      schema.setDefaultJavaPackageDao("me.itangqi.dao");
@@ -26,7 +28,7 @@ public class MyDaoGenerator {
 
         // 最后我们将使用 DAOGenerator 类的 generateAll() 方法自动生成代码，此处你需要根据自己的情况更改输出目录（既之前创建的 java-gen)。
         // 其实，输出目录的路径可以在 build.gradle 中设置，有兴趣的朋友可以自行搜索，这里就不再详解。
-        new DaoGenerator().generateAll(schema,"E:\\my_owe_code\\ub_code\\android\\idea\\SuzhouBus\\app\\src\\main\\java\\com\\wdsunday\\database");
+        new DaoGenerator().generateAll(schema,"E:\\workspace\\ub_code\\android\\idea\\SuZhouBus\\app\\src\\main\\java");
 //        schema = new Schema(1, "me.itangqi.greendao");
 //        addNote2(schema);
 //        new DaoGenerator().generateAll(schema, "D:\\my_owe_code\\android\\Android_Studio\\MyGreenDAO\\app\\src\\main\\java-gen");

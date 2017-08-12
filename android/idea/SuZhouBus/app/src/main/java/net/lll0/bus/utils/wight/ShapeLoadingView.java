@@ -1,5 +1,6 @@
 package net.lll0.bus.utils.wight;
 
+import android.animation.ArgbEvaluator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.nineoldandroids.animation.ArgbEvaluator;
 
 import net.lll0.bus.suzhoubus.R;
 
