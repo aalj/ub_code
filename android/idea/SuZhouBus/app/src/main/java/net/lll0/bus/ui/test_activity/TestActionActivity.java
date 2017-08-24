@@ -1,4 +1,4 @@
-package net.lll0.bus.ui;
+package net.lll0.bus.ui.test_activity;
 
 import android.app.Activity;
 import android.os.Bundle;

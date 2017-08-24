@@ -3,7 +3,7 @@
     package="net.lll0.bus.suzhoubus">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -21,16 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="net.lll0.bus.ui.businfo.LineInfoActivity"></activity>
+        <activity android:name="net.lll0.bus.ui.businfo.LineInfoActivity" />
         <activity
-            android:name="net.lll0.bus.ui.TestActionActivity"
+            android:name="net.lll0.bus.ui.test_activity.TestActionActivity"
             android:label="@string/title_activity_test_action"
-            android:theme="@style/AppTheme.NoActionBar">
-
-
-
-        </activity>
-        <activity android:name="net.lll0.bus.ui.other.NotNetworkActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name="net.lll0.bus.ui.other.NotNetworkActivity" />
+        <activity android:name="net.lll0.bus.ui.test_activity.RecyclerViewTestActivity"></activity>
     </application>
 
 </manifest>
