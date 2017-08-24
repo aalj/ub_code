@@ -5,4 +5,5 @@ package net.lll0.bus.adapter.test;
  */
 
 public class Bean {
+    int type;
 }
