@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 
 /**
- * Created by tlh on 2016/2/15.
+ * Created by liang on 2016/2/15.
  */
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;//集合类，layout里包含的View,以view的id作为key，value是view对象
@@ -24,6 +24,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         mContext = ctx;
         mViews = new SparseArray<View>();
     }
+
     public RecyclerViewHolder(Context ctx, View itemView,int type) {
         super(itemView);
         mContext = ctx;

@@ -13,6 +13,7 @@ import net.lll0.bus.adapter.RecyclerViewHolder;
 import net.lll0.bus.adapter.BaseBean;
 import net.lll0.bus.adapter.RecyclerViewNotHeadFootAdapter;
 import net.lll0.bus.suzhoubus.R;
+import net.lll0.bus.utils.umeng.UmengManger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,18 +39,18 @@ public class RecyclerViewTestActivity extends Activity implements RecyclerViewNo
         BaseBean bean;
         for (int i = 0; i < 10; i++) {
             bean = new BaseBean();
-            if (i == 0) {
+            if (i %1== 0) {
                 bean.setType(1);
                 beans.add(bean);
                 continue;
-            } else if (i == 9) {
+            } else if (i%3 == 9) {
                 bean.setType(3);
                 beans.add(bean);
                 continue;
-            }
+            }else if(i%2==0){
             bean.setType(2);
             beans.add(bean);
-        }
+        }}
     }
 
     private void initView() {
@@ -89,6 +90,7 @@ public class RecyclerViewTestActivity extends Activity implements RecyclerViewNo
 
     @Override
     public void onItemClick(View itemView, int pos) {
+        UmengManger.getInstance().onEvent("abc","test");
         Toast.makeText(mActitivity,pos+"",Toast.LENGTH_SHORT).show();
     }
 }
