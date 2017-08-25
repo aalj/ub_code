@@ -1,15 +1,9 @@
-package net.lll0.bus.adapter.test;
+package net.lll0.bus.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import net.lll0.bus.adapter.BaseRecyclerAdapter;
-import net.lll0.bus.suzhoubus.R;
-import net.lll0.bus.adapter.RecyclerViewHolder;
 
 import java.util.List;
 
@@ -17,7 +11,7 @@ import java.util.List;
  * Created by liang on 2017/8/24.
  */
 
-public abstract class RecyclerViewNotHeadFootAdapter<T extends Bean> extends RecyclerView.Adapter<RecyclerViewHolder> {
+public abstract class RecyclerViewNotHeadFootAdapter<T extends BaseBean> extends RecyclerView.Adapter<RecyclerViewHolder> {
     /**
      * 加载不同的两种方式
      * 1. 传入不同的数据源，对应的位置加载不同的布局

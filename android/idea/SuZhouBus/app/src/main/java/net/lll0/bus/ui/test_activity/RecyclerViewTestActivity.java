@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import net.lll0.bus.adapter.RecyclerViewHolder;
-import net.lll0.bus.adapter.test.Bean;
-import net.lll0.bus.adapter.test.RecyclerViewNotHeadFootAdapter;
+import net.lll0.bus.adapter.BaseBean;
+import net.lll0.bus.adapter.RecyclerViewNotHeadFootAdapter;
 import net.lll0.bus.suzhoubus.R;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class RecyclerViewTestActivity extends Activity implements RecyclerViewNo
     private RecyclerView mRecycler;
     private Activity mActitivity;
     private RecyclerViewNotHeadFootAdapter recyclerViewNotHeadFootAdapter;
-    private List<Bean> beans;
+    private List<BaseBean> beans;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,9 @@ public class RecyclerViewTestActivity extends Activity implements RecyclerViewNo
 
     private void initData() {
         beans = new ArrayList<>();
-        Bean bean;
+        BaseBean bean;
         for (int i = 0; i < 10; i++) {
-            bean = new Bean();
+            bean = new BaseBean();
             if (i == 0) {
                 bean.setType(1);
                 beans.add(bean);
@@ -55,7 +55,7 @@ public class RecyclerViewTestActivity extends Activity implements RecyclerViewNo
     private void initView() {
         mRecycler = (RecyclerView) findViewById(R.id.recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(mActitivity));
-        recyclerViewNotHeadFootAdapter = new RecyclerViewNotHeadFootAdapter<Bean>(beans, mActitivity) {
+        recyclerViewNotHeadFootAdapter = new RecyclerViewNotHeadFootAdapter<BaseBean>(beans, mActitivity) {
             @Override
             protected RecyclerViewHolder myCreateViewHolder(ViewGroup parent, int viewType) {
                 RecyclerViewHolder recyclerViewHolder = null;
@@ -71,7 +71,7 @@ public class RecyclerViewTestActivity extends Activity implements RecyclerViewNo
 
             @Override
             protected void myBindViewHolder(RecyclerViewHolder holder, int position) {
-                Bean bean = beans.get(position);
+                BaseBean bean = beans.get(position);
                 int type = bean.getType();
                 if (1 == type) {
                     holder.setText(R.id.textView2, "textView2");
