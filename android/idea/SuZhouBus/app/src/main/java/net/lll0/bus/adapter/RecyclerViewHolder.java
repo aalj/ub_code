@@ -17,11 +17,18 @@ import android.widget.TextView;
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;//集合类，layout里包含的View,以view的id作为key，value是view对象
     private Context mContext;//上下文对象
+    private int type;
 
     public RecyclerViewHolder(Context ctx, View itemView) {
         super(itemView);
         mContext = ctx;
         mViews = new SparseArray<View>();
+    }
+    public RecyclerViewHolder(Context ctx, View itemView,int type) {
+        super(itemView);
+        mContext = ctx;
+        mViews = new SparseArray<View>();
+        this.type = type;
     }
 
     public View getItemView() {
@@ -87,7 +94,13 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     }
 
 
+    public int getType() {
+        return type;
+    }
 
+    public void setType(int type) {
+        this.type = type;
+    }
 
     /**
      * 通过该方法可以的到对应控件的点击事件

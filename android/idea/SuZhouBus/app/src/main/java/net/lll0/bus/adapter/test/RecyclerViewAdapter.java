@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.lll0.bus.suzhoubus.R;
+import net.lll0.bus.adapter.RecyclerViewHolder;
 
 import java.util.List;
 
@@ -49,11 +50,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         //假设加载 三中布局分别对应 1 2 3
 
         if (1 == viewType) {
-            return new RecyclerViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item, parent, false));
+            return new RecyclerViewHolder(mContext,LayoutInflater.from(mContext).inflate(R.layout.item, parent, false), viewType);
         } else if (2 == viewType) {
-            return new RecyclerViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_lineinfo, parent, false));
+            return new RecyclerViewHolder(mContext,LayoutInflater.from(mContext).inflate(R.layout.item_lineinfo, parent, false), viewType);
         } else if (3 == viewType) {
-            return new RecyclerViewHolder(LayoutInflater.from(mContext).inflate(R.layout.nav_header_home, parent, false));
+            return new RecyclerViewHolder(mContext,LayoutInflater.from(mContext).inflate(R.layout.nav_header_home, parent, false), viewType);
         }
 
         return null;
@@ -62,6 +63,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     @Override
     public void onBindViewHolder(RecyclerViewHolder holder, int position) {
         //onCreateViewHolder 为不同的布局绑定对应的数据
+        Bean bean = this.bean.get(position);
+        int type = bean.type;
+        if (1 == type) {
+            holder.setText(R.id.textView2,"textView2");
+            holder.setText(R.id.textView3,"textView3");
+        } else if (2 == type) {
+            holder.setText(R.id.lineinfo_index,position+"");
+        } else if (3 == type) {
+
+        }
 
 
     }
