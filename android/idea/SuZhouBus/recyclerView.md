@@ -1,3 +1,5 @@
+[原文首发  [http://blog.lll0.net/post/recyclerview.html](http://blog.lll0.net/post/recyclerview.html)]([http://blog.lll0.net/post/recyclerview.html](http://blog.lll0.net/post/recyclerview.html))
+
 > 强大而高效的 `RecyclerView`  
 
 `ListView`作为一个强大而有使用频繁的控件，但是随着我们业务的发展慢慢的就感觉 `ListView` 在某些业务场景中已经不能满足我们的业务需求。举个栗子：如果我们在一个页面上需要加载不同的布局，在列表中间某一行加载一个广告试图，而这个广告的布局和整个个列表的布局样式是完全不一样的。如果放在`ListView` 中，这种布局是不太好实现的。但是放在Google 提出的新控件 ReyclerView 中 实现这种布局是非常简单的。
