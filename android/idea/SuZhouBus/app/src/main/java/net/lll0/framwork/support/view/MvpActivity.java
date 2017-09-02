@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.umeng.analytics.MobclickAgent;
+
 import net.lll0.framwork.mvpbase.presenter.MvpPresenter;
 import net.lll0.framwork.mvpbase.view.MvpView;
 import net.lll0.framwork.support.delegate.activity.ActivityMvpDelegate;
@@ -49,12 +51,14 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         getActivityMvpDelegate().onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         getActivityMvpDelegate().onResume();
     }
 

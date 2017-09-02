@@ -83,6 +83,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
     }
 
 
