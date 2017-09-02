@@ -26,7 +26,13 @@
     <color name="white">#FFFFFF</color>
     <color name="super_light_grey">#FAFAFA</color>
     <color name="line_grey">#D7D7D7</color>
+    <color name="customize_red">#ffff0000</color>
+    <color name="customize_blue">#3194f1</color>
 
 
+    <!--文字颜色-->
+<color name="text_color_01">#FF333333</color>
+<color name="text_color_02">#FF666666</color>
+<color name="text_color_03">#FF999999</color>
 
 </resources>

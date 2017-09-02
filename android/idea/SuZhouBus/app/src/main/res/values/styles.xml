@@ -43,4 +43,28 @@
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
 
+    <!--重要的文字-->
+    <style name="important_text">
+        <item name="android:textColor">@color/text_color_01</item>
+
+    </style>
+
+    <!--次要的文字-->
+    <style name="secondary_text">
+        <item name="android:textColor">@color/text_color_02</item>
+
+    </style>
+    <!--非常重要文字-->
+    <style name="very_important_text">
+
+    </style>
+
+    <!--不重要的文字 重要是不让引起视觉焦点-->
+    <style name="not_important_text">
+        <item name="android:textColor">@color/text_color_03</item>
+
+    </style>
+    
+
+    
 </resources>
