@@ -3,11 +3,6 @@ package net.lll0.bus.ui.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +11,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -26,19 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import net.lll0.bus.adapter.BaseRecyclerAdapter;
+import net.lll0.bus.adapter.RecyclerViewHolder;
 import net.lll0.bus.contstant.UmengConstant;
+import net.lll0.bus.database.bean.SearchLineBean;
+import net.lll0.bus.suzhoubus.R;
+import net.lll0.bus.ui.businfo.LineInfoActivity;
+import net.lll0.bus.ui.feedback.FeedbackActivity;
+import net.lll0.bus.ui.home.mvp.HomePresenter;
+import net.lll0.bus.ui.home.mvp.HomeView;
 import net.lll0.bus.utils.ToastUtil;
 import net.lll0.bus.utils.WaitLoading;
 import net.lll0.bus.utils.umeng.UmengManger;
 import net.lll0.framwork.support.view.MvpActivity;
-import net.lll0.bus.suzhoubus.R;
-import net.lll0.bus.adapter.BaseRecyclerAdapter;
-import net.lll0.bus.adapter.RecyclerViewHolder;
-import net.lll0.bus.database.bean.SearchLineBean;
-import net.lll0.bus.ui.businfo.LineInfoActivity;
-import net.lll0.bus.ui.home.mvp.HomePresenter;
-import net.lll0.bus.ui.home.mvp.HomeView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,8 +39,8 @@ import java.util.List;
 
 import static android.view.View.GONE;
 
-public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
-        implements NavigationView.OnNavigationItemSelectedListener,
+public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
+        implements
         View.OnClickListener, HomeView {
     private Activity mActivity;
     private List<SearchLineBean> lineBeans = null;
@@ -58,8 +51,9 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     private ImageView searchTextDelete = null;
     private TextView searchBtnAction = null;
     private RecyclerView list = null;
+    private TextView mFeedback;
 
-    CardView cardView;
+    //    CardView cardView;
     BaseRecyclerAdapter<SearchLineBean> recyclerAdapter = null;
 
 
@@ -70,81 +64,15 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.content_home_v1);
         mActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
 
     }
 
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
 // TODO: 2017/4/3 转移
 //    @Override
@@ -165,7 +93,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         searchActionLay = (LinearLayout) findViewById(R.id.search_action_lay);
         searchTextDelete = (ImageView) findViewById(R.id.search_text_delete);
         searchBtnAction = (TextView) findViewById(R.id.home_search_btn_action);
-        cardView = (CardView) findViewById(R.id.college);
+//        cardView = (CardView) findViewById(R.id.college);
         lineNum = (EditText) findViewById(R.id.linenum);
 
         list = (RecyclerView) findViewById(R.id.list);
@@ -178,7 +106,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         searchBtnAction.setVisibility(GONE);
 
 
-        cardView.setVisibility(View.VISIBLE);
+//        cardView.setVisibility(View.VISIBLE);
         list.setVisibility(View.GONE);
 
         lineNum.addTextChangedListener(textWatcher);
@@ -237,7 +165,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_UP) {
                     // 先隐藏键盘
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(HomeActivity.this.getCurrentFocus()
+                            .hideSoftInputFromWindow(HomeActivityV1.this.getCurrentFocus()
                                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     //调用View 的自点击方法
                     searchBtnAction.performClick();
@@ -246,6 +174,8 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
                 return false;
             }
         });
+        mFeedback = (TextView) findViewById(R.id.feedback);
+        mFeedback.setOnClickListener(this);
     }
 
 
@@ -275,16 +205,19 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
         } else if (R.id.search_text_delete == id) {//删除文字按钮
             lineNum.setText("");
 
+        }else if(R.id.feedback==id){
+            Intent intent = new Intent(mActivity, FeedbackActivity.class);
+            startActivity(intent);
         }
     }
 
     private void search() {
-        UmengManger.getInstance().onEvent(UmengConstant.HOMEACTIVITY_EVENT_KEY,UmengConstant.HOMEACTIVITY_QUERY_KEY);
+        UmengManger.getInstance().onEvent(UmengConstant.HOMEACTIVITY_EVENT_KEY, UmengConstant.HOMEACTIVITY_QUERY_KEY);
         String lineNumStr = lineNum.getText().toString().trim();
         if (!TextUtils.isEmpty(lineNumStr)) {
-            WaitLoading.show(false,mActivity);
-            getPresenter().getTotalLines("line.php?line="+lineNumStr);
-            Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
+            WaitLoading.show(false, mActivity);
+            getPresenter().getTotalLines("line.php?line=" + lineNumStr);
+//            Toast.makeText(mActivity, "开始搜索", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(mActivity, "输入公交番号", Toast.LENGTH_SHORT).show();
         }
@@ -294,13 +227,12 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     public void getTotalLines(List<SearchLineBean> lineBeens) {
         WaitLoading.dismiss();
 
-        cardView.setVisibility(View.GONE);
+//        cardView.setVisibility(View.GONE);
         list.setVisibility(View.VISIBLE);
 
         this.lineBeans = lineBeens;
         recyclerAdapter.addList(lineBeens);
     }
-
 
 
     @Override
@@ -339,7 +271,7 @@ public class HomeActivity extends MvpActivity<HomeView, HomePresenter>
     @Override
     public void getError(String errorMessge) {
         WaitLoading.dismiss();
-        ToastUtil.showLongToast(mActivity,errorMessge);
+        ToastUtil.showLongToast(mActivity, errorMessge);
 
     }
 }

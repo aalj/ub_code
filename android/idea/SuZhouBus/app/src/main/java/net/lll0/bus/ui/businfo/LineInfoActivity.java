@@ -17,8 +17,10 @@ import android.support.v7.widget.RecyclerView;
 
 import net.lll0.bus.adapter.BaseRecyclerAdapter;
 import net.lll0.bus.adapter.RecyclerViewHolder;
-import net.lll0.bus.contstant.BaseConsTent;
+import net.lll0.bus.contstant.BaseConstant;
+import net.lll0.bus.database.bean.StationInfoBean;
 import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
+import net.lll0.bus.ui.stationinfo.StationInfoActivity;
 import net.lll0.bus.utils.ToastUtil;
 import net.lll0.bus.utils.WaitLoading;
 import net.lll0.framwork.support.view.MvpActivity;
@@ -39,6 +41,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         implements LineView, BaseRecyclerAdapter.OnItemClickListener {
 
     private static final String TAG=LineInfoActivity.class.getSimpleName();
+    public  static final String INTENT_JUMP_STATICINFO="INTENT_JUMP_STATICINFO";
 
     private Activity mActivity;
     private RecyclerView listLlineinfo = null;
@@ -70,7 +73,11 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
     private void initView() {
         listLlineinfo = (RecyclerView) findViewById(R.id.listL_lineinfo);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 
             @Override
@@ -117,12 +124,18 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
         Intent intent = getIntent();
 
+
+        if (intent.hasExtra(StationInfoActivity.JUMP_LINEINFO_ACTIVITY)) {
+            StationInfoBean stationInfoBean = intent.getParcelableExtra(StationInfoActivity.JUMP_LINEINFO_ACTIVITY);
+            lineInfoBeen  = new SearchLineBean();
+            lineInfoBeen.link=stationInfoBean.lineUrl;
+            lineInfoBeen.startLineID=stationInfoBean.lineId;
+
+        }
+
         if (intent.hasExtra(HomeActivity.LINEINFO_BUNDLE)) {
             Bundle bundleExtra = intent.getBundleExtra(HomeActivity.LINEINFO_BUNDLE);
             lineInfoBeen = (SearchLineBean) bundleExtra.get(HomeActivity.LINEINFO);
-        } else {
-            finish();
-            return;
         }
 
         if (lineInfoBeen == null) {
@@ -134,7 +147,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         RequestBody formBody = new FormBody.Builder()
                 .add("lineID", lineInfoBeen.startLineID)
                 .build();
-        getPresenter().getLineRealTimeInfo(BaseConsTent.HTTP_URL_REAL_TIME, formBody);
+        getPresenter().getLineRealTimeInfo(BaseConstant.HTTP_URL_REAL_TIME, formBody);
 
 
     }
@@ -155,7 +168,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         RequestBody formBody = new FormBody.Builder()
                 .add("lineID", this.lineInfoBeen.startLineID)
                 .build();
-        getPresenter().getLineRealTimeInfo(BaseConsTent.HTTP_URL_REAL_TIME, formBody);
+        getPresenter().getLineRealTimeInfo(BaseConstant.HTTP_URL_REAL_TIME, formBody);
     }
 
     @Override
@@ -191,9 +204,13 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public void onItemClick(View itemView, int pos) {
-        ToastUtil.showLongToast(mActivity,"点击");
+//        ToastUtil.showLongToast(mActivity,"点击");
         LineInfoBean lineInfoBean = lineInfoBeans.get(pos);
         Log.e(TAG, "onItemClick: " );
+
+        Intent intent = new Intent(mActivity, StationInfoActivity.class);
+        intent.putExtra(INTENT_JUMP_STATICINFO,lineInfoBean);
+        startActivity(intent);
     }
 
 
@@ -215,7 +232,7 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.collection) {
-            ToastUtils.showShort(this, "点击菜单");
+            ToastUtils.showShort(this, "收藏功能正在开发");
             return true;
         }
 

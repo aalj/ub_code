@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "net.lll0.bus.suzhoubus"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 2
         versionName "1.1"
@@ -16,6 +16,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+
     }
 }
 
@@ -38,4 +45,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //友盟应用统计
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile(name: 'alicloud-android-feedback-3', ext: 'aar')
+    compile files('libs/alicloud-android-monitor-2.5.1.1_for_bc_proguard.jar')
+    compile files('libs/alicloud-android-utils-1.0.3.jar')
+    compile files('libs/utdid4all-1.1.5.3_proguard.jar')
+//    compile 'com.carson_ho:SearchLayout:1.0.1'
 }

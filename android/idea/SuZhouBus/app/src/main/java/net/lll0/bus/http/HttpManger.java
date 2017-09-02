@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import net.lll0.bus.contstant.BaseConsTent;
+import net.lll0.bus.contstant.BaseConstant;
 import net.lll0.bus.exception.NotNetwork;
 import net.lll0.bus.ui.other.NotNetworkActivity;
 
@@ -33,7 +33,7 @@ public class HttpManger {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(BaseConsTent.HTTP_URL + url)
+                .url(BaseConstant.HTTP_URL + url)
 //                .post(formBody)
                 .build();
 
@@ -65,7 +65,7 @@ public class HttpManger {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(BaseConsTent.HTTP_URL + param)
+                .url(BaseConstant.HTTP_URL + param)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -105,7 +105,7 @@ public class HttpManger {
 //                .build();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(BaseConsTent.HTTP_URL + param)
+                .url(BaseConstant.HTTP_URL + param)
                 .post(formBody)
 
                 .build();

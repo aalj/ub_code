@@ -28,7 +28,7 @@ public class UmengManger {
 	 * @param enable
 	 */
 	public void setEnableEncrypt(boolean enable){
-		MobclickAgent.enableEncrypt(  enable);
+		MobclickAgent.enableEncrypt(enable);
 	}
 
 	/**

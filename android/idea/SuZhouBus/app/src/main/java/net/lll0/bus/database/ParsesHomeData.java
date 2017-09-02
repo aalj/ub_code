@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import net.lll0.bus.database.bean.LineInfoBean;
 import net.lll0.bus.database.bean.SearchLineBean;
 import net.lll0.bus.database.bean.StationInfoBean;
+import net.lll0.bus.utils.ObjectUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -209,9 +210,14 @@ public class ParsesHomeData {
                     Elements b = p.select("b");
                     int size = b.size();
                     if (size>0) {
-                        infoBean.lineName = b.text();
+                        infoBean.lineName = b.get(0).text();
                     }
-                    infoBean.realTimeInfo= p.select("span").text();
+                    Elements span = p.select("span");
+                    infoBean.realTimeInfo= span.text();
+                    String b1 = span.select("b").text();
+                    if (!ObjectUtils.isBlank(b1)) {
+                        infoBean.realTimeInfo=b1;
+                    }
 //                    if (size>1) {
 //                    }
                 }

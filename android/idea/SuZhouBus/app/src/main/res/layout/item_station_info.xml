@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/icon_bus" />
+
+        <TextView
+            android:id="@+id/bus_line_number_te"
+            style="@style/important_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/icon"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/icon"
+            android:layout_toRightOf="@+id/icon"
+            android:text=""
+            tools:text="120路" />
+
+        <TextView
+            android:id="@+id/station_start_end_te"
+            style="@style/secondary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/bus_line_number_te"
+            android:layout_below="@id/bus_line_number_te"
+            android:text="起始站： " />
+
+        <TextView
+            android:id="@+id/station_start_end_content"
+            style="@style/important_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bus_line_number_te"
+            android:layout_toRightOf="@id/station_start_end_te"
+            android:text=""
+
+            tools:text="车坊首末站" />
+
+        <ImageView
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:id="@+id/station_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/station_start_end_te"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/bus_line_number_te"
+            android:src="@drawable/collection_select_yellow" />
+
+        <TextView
+            android:id="@+id/station_num_3"
+            style="@style/secondary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+
+            android:layout_toLeftOf="@id/station_collection"
+            android:text="站" />
+
+        <TextView
+            android:id="@+id/station_num_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/station_num_3"
+            android:text="3"
+            android:textColor="@color/customize_blue" />
+
+        <TextView
+            android:id="@+id/station_num_1"
+            style="@style/secondary_text"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/station_num_2"
+            android:text="还有" />
+    </RelativeLayout>
+
+</LinearLayout>

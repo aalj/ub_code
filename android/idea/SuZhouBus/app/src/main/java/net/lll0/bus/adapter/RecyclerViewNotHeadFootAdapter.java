@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.lll0.bus.utils.ObjectUtils;
+
 import java.util.List;
 
 /**
@@ -115,6 +117,14 @@ public abstract class RecyclerViewNotHeadFootAdapter<T extends BaseBean> extends
      */
     public interface OnItemLongClickListener {
         void onItemLongClick(View itemView, int pos);
+    }
+
+    public void addList(List<T> list){
+        if (!ObjectUtils.isBlank(list)) {
+            bean.clear();
+            bean.addAll(list);
+            notifyDataSetChanged();
+        }
     }
 
 }

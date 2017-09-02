@@ -22,4 +22,8 @@
     <string name="apple_permission_fail">已拒绝权限</string>
     <string name="hint">输入公交番号（快线，高峰，游，夜）</string>
     <string name="index_info">常用公交线路</string>
+
+
+    <string name="data_lost">实时数据失联</string>
+
 </resources>

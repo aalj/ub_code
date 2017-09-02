@@ -84,30 +84,6 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
 
     }
 
-    public void getStationInfo(String param) {
 
-        //都是get请求 所以共用同样的网络请求方法
-        lineModel.getLineInfo(param,  new SendData() {
-            @Override
-            public void success(String data) {
-                ParsesHomeData parsesHomeData = new ParsesHomeData(data);
-                final List<LineInfoBean> lineInfoBeans = parsesHomeData.parseHtmlLineInfoV2();
-
-
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getView().getLineInfo(lineInfoBeans);
-                    }
-                });
-            }
-
-            @Override
-            public void fail(Exception e) {
-                error();
-            }
-        }, context);
-
-    }
 
 }

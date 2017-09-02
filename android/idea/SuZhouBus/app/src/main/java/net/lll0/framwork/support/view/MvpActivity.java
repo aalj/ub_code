@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -41,6 +43,26 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
         return this.activityMvpDelegate;
     }
 
+    public void myFinish() {
+        this.finish();
+    }
+
+    /**
+     * 标题栏
+     * @param toolbar
+     */
+    public void myFinish(Toolbar toolbar) {
+        if (toolbar!=null) {
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myFinish();
+                }
+            });
+        }
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -117,7 +139,7 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
 
     @Override
     public void setRetainInstance(boolean retaionInstance) {
-       this.retainInstance = retaionInstance;
+        this.retainInstance = retaionInstance;
     }
 
     @Override
@@ -127,7 +149,7 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
 
     @Override
     public boolean shouldInstanceBeRetained() {
-        return this.retainInstance&& isChangingConfigurations();
+        return this.retainInstance && isChangingConfigurations();
     }
 
     @Override
@@ -281,10 +303,6 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenter<V>>
         }
         return true;
     }
-
-
-
-
 
 
 }
