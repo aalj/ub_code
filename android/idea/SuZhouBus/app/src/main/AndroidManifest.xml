@@ -19,7 +19,7 @@
             android:value="597c4f38c8957611600017ca" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="test" />
+            android:value="myapp" />
 
         <activity
             android:name="net.lll0.bus.ui.home.HomeActivityV1"
