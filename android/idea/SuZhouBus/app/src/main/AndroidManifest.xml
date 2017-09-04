@@ -17,9 +17,10 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="597c4f38c8957611600017ca" />
+
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="myapp" />
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
         <activity
             android:name="net.lll0.bus.ui.home.HomeActivityV1"

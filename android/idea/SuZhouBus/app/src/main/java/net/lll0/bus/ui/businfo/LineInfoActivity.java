@@ -6,31 +6,30 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v7.widget.RecyclerView;
-
 
 import net.lll0.bus.adapter.BaseRecyclerAdapter;
 import net.lll0.bus.adapter.RecyclerViewHolder;
 import net.lll0.bus.contstant.BaseConstant;
-import net.lll0.bus.database.bean.StationInfoBean;
-import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
-import net.lll0.bus.ui.stationinfo.StationInfoActivity;
-import net.lll0.bus.utils.ToastUtil;
-import net.lll0.bus.utils.WaitLoading;
-import net.lll0.framwork.support.view.MvpActivity;
-import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.database.bean.LineInfoBean;
 import net.lll0.bus.database.bean.SearchLineBean;
+import net.lll0.bus.database.bean.StationInfoBean;
+import net.lll0.bus.suzhoubus.R;
+import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
 import net.lll0.bus.ui.businfo.mvc.LinePresenter;
 import net.lll0.bus.ui.businfo.mvc.LineView;
 import net.lll0.bus.ui.home.HomeActivity;
+import net.lll0.bus.ui.stationinfo.StationInfoActivity;
+import net.lll0.bus.utils.ToastUtil;
+import net.lll0.bus.utils.WaitLoading;
 import net.lll0.bus.utils.wight.ToastUtils;
+import net.lll0.framwork.support.view.MvpActivity;
 
 import java.util.List;
 
@@ -66,7 +65,8 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
         mActivity = this;
         initView();
-        initIntent();
+        Intent intent = getIntent();
+        initIntent(intent);
     }
 
 
@@ -118,11 +118,19 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.e(TAG, "onNewIntent: "+TAG );
+        super.onNewIntent(intent);
+        initIntent(intent);
+        if (listLlineinfo!=null) {
+            listLlineinfo.scrollToPosition(0);
+        }
+    }
 
-    public void initIntent() {
+    public void initIntent(Intent intent) {
 
 
-        Intent intent = getIntent();
 
 
         if (intent.hasExtra(StationInfoActivity.JUMP_LINEINFO_ACTIVITY)) {

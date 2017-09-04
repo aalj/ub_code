@@ -5,12 +5,52 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "net.lll0.bus.suzhoubus"
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+
+    productFlavors {
+
+        //应用宝
+        myapp {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "myapp"]
+        }
+        //小米
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        //360
+        qh360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
+        }
+        //百度助手
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        }
+        //木蚂蚁
+        mumayi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "mumayi"]
+        }
+        //华为
+        huawei {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+        }
+        //友盟
+        bumu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "bumu"]
+        }
+        //vivo
+        vivo {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "vivo"]
+        }
+    }
+
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -45,9 +85,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //友盟应用统计
     compile 'com.umeng.analytics:analytics:latest.integration'
+    //阿里百川用户反馈
     compile(name: 'alicloud-android-feedback-3', ext: 'aar')
     compile files('libs/alicloud-android-monitor-2.5.1.1_for_bc_proguard.jar')
     compile files('libs/alicloud-android-utils-1.0.3.jar')
     compile files('libs/utdid4all-1.1.5.3_proguard.jar')
-//    compile 'com.carson_ho:SearchLayout:1.0.1'
 }
