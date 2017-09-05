@@ -20,9 +20,9 @@ android {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "myapp"]
         }
         //小米
-//        xiaomi {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
-//        }
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
 //        //360
 //        qh360 {
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
