@@ -76,10 +76,6 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home_v1);
 
-        AdManager.getInstance(this).init("35b77a7c2db7cac1", "72ac7972f128b2f2", true  );
-//        AdManager.getInstance(this).init("0ff2ce00fbaadac6", "4b17d630489c5c7a", true  );
-
-
         mActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,7 +85,7 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
 
     }
 
-    private void initData() {
+    private void initDataAd() {
         SpotManager.getInstance(mActivity).setImageType(SpotManager.IMAGE_TYPE_VERTICAL);
 
         // 设置动画类型，默认高级动画
@@ -108,29 +104,6 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
             public void onRequestSuccess() {
                 Log.e(TAG, "onRequestSuccess:  广告获取成功" );
                 ToastUtil.showShortToast(mActivity,"广澳获取成功");
-
-//                SpotManager.getInstance(mActivity).showSpot(mActivity,
-//                        new SpotListener() {
-//                            @Override
-//                            public void onShowSuccess() {
-//                                Log.e(TAG, "onRequestSuccess:  展示成功" );
-//                            }
-//
-//                            @Override
-//                            public void onShowFailed(int i) {
-//                                Log.e(TAG, "onRequestSuccess:  展示失败" );
-//                            }
-//
-//                            @Override
-//                            public void onSpotClosed() {
-//                                Log.e(TAG, "onRequestSuccess:  展示关闭" );
-//                            }
-//
-//                            @Override
-//                            public void onSpotClicked(boolean b) {
-//                                Log.e(TAG, "onRequestSuccess:  展示点击" );
-//                            }
-//                        });
 
                 SpotManager.getInstance(mActivity).showSlideableSpot(mActivity,
                         new SpotListener() {
@@ -271,30 +244,30 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         mFeedback.setOnClickListener(this);
 
 
-        View bannerView = BannerManager.getInstance(mActivity)
-                .getBannerView(mActivity, new BannerViewListener() {
-                    @Override
-                    public void onRequestSuccess() {
-                        Log.e(TAG, "onRequestSuccess:  展示成功" );
-                    }
-
-                    @Override
-                    public void onSwitchBanner() {
-                        Log.e(TAG, "onRequestSuccess:  onSwitchBanner" );
-
-                    }
-
-                    @Override
-                    public void onRequestFailed() {
-                        Log.e(TAG, "onRequestSuccess:  展示失败" );
-                    }
-                });
+//        View bannerView = BannerManager.getInstance(mActivity)
+//                .getBannerView(mActivity, new BannerViewListener() {
+//                    @Override
+//                    public void onRequestSuccess() {
+//                        Log.e(TAG, "onRequestSuccess:  展示成功" );
+//                    }
+//
+//                    @Override
+//                    public void onSwitchBanner() {
+//                        Log.e(TAG, "onRequestSuccess:  onSwitchBanner" );
+//
+//                    }
+//
+//                    @Override
+//                    public void onRequestFailed() {
+//                        Log.e(TAG, "onRequestSuccess:  展示失败" );
+//                    }
+//                });
 
 // 获取要嵌入广告条的布局
-        LinearLayout bannerLayout = (LinearLayout) findViewById(R.id.ll_banner);
+//        LinearLayout bannerLayout = (LinearLayout) findViewById(R.id.ll_banner);
 
 // 将广告条加入到布局中
-        bannerLayout.addView(bannerView);
+//        bannerLayout.addView(bannerView);
 
 
 
