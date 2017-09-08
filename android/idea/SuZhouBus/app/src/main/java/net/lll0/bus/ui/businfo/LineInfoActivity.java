@@ -3,6 +3,7 @@ package net.lll0.bus.ui.businfo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,8 @@ import net.lll0.bus.contstant.BaseConstant;
 import net.lll0.bus.database.bean.LineInfoBean;
 import net.lll0.bus.database.bean.SearchLineBean;
 import net.lll0.bus.database.bean.StationInfoBean;
+import net.lll0.bus.database.entity.CollectionBusLineEntity;
+import net.lll0.bus.database.manager.CollectionManager;
 import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.ui.businfo.entity.RealTImeInfoEntity;
 import net.lll0.bus.ui.businfo.mvc.LinePresenter;
@@ -39,20 +42,26 @@ import okhttp3.RequestBody;
 public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         implements LineView, BaseRecyclerAdapter.OnItemClickListener {
 
-    private static final String TAG=LineInfoActivity.class.getSimpleName();
-    public  static final String INTENT_JUMP_STATICINFO="INTENT_JUMP_STATICINFO";
+    private static final String TAG = LineInfoActivity.class.getSimpleName();
+    public static final String INTENT_JUMP_STATICINFO = "INTENT_JUMP_STATICINFO";
 
     private Activity mActivity;
     private RecyclerView listLlineinfo = null;
-    SwipeRefreshLayout swipeRefreshLayout;
-    RealTImeInfoEntity realTImeInfoEntity;
-    List<LineInfoBean> lineInfoBeans;
-    SearchLineBean lineInfoBeen = null;
-    BaseRecyclerAdapter baseRecyclerAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private RealTImeInfoEntity realTImeInfoEntity;
+    private List<LineInfoBean> lineInfoBeans;
+    private SearchLineBean lineInfoBeen = null;
+    private BaseRecyclerAdapter baseRecyclerAdapter;
+    //收藏按钮
+    private MenuItem collectionBut;
+    //数据库操作对象
+    private CollectionManager instance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
         setContentView(R.layout.activity_line_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,11 +71,17 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
                 finish();
             }
         });
-
+        instance = CollectionManager.getInstance();
         mActivity = this;
         initView();
         Intent intent = getIntent();
         initIntent(intent);
+        iniData();
+    }
+
+    private void iniData() {
+        Log.e(TAG, "iniData: ");
+
     }
 
 
@@ -120,10 +135,10 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     protected void onNewIntent(Intent intent) {
-        Log.e(TAG, "onNewIntent: "+TAG );
+        Log.e(TAG, "onNewIntent: " + TAG);
         super.onNewIntent(intent);
         initIntent(intent);
-        if (listLlineinfo!=null) {
+        if (listLlineinfo != null) {
             listLlineinfo.scrollToPosition(0);
         }
     }
@@ -131,13 +146,11 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
     public void initIntent(Intent intent) {
 
 
-
-
         if (intent.hasExtra(StationInfoActivity.JUMP_LINEINFO_ACTIVITY)) {
             StationInfoBean stationInfoBean = intent.getParcelableExtra(StationInfoActivity.JUMP_LINEINFO_ACTIVITY);
-            lineInfoBeen  = new SearchLineBean();
-            lineInfoBeen.link=stationInfoBean.lineUrl;
-            lineInfoBeen.startLineID=stationInfoBean.lineId;
+            lineInfoBeen = new SearchLineBean();
+            lineInfoBeen.link = stationInfoBean.lineUrl;
+            lineInfoBeen.startLineID = stationInfoBean.lineId;
 
         }
 
@@ -214,20 +227,28 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
     public void onItemClick(View itemView, int pos) {
 //        ToastUtil.showLongToast(mActivity,"点击");
         LineInfoBean lineInfoBean = lineInfoBeans.get(pos);
-        Log.e(TAG, "onItemClick: " );
+        Log.e(TAG, "onItemClick: ");
 
         Intent intent = new Intent(mActivity, StationInfoActivity.class);
-        intent.putExtra(INTENT_JUMP_STATICINFO,lineInfoBean);
+        intent.putExtra(INTENT_JUMP_STATICINFO, lineInfoBean);
         startActivity(intent);
     }
-
-
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.collection, menu);
+        collectionBut = menu.findItem(R.id.collection);
+        Log.e(TAG, "onCreateOptionsMenu: ");
+
+        CollectionBusLineEntity byId = instance.findById(lineInfoBeen.startLineID);
+        if (byId != null) {
+//            collectionBut.setChecked(true);
+//            collectionBut.setCheckable(true);
+            collectionBut.setEnabled(false);
+            collectionBut.setIcon(ContextCompat.getDrawable(mActivity,R.mipmap.collection_targer_select));
+        }
         return true;
     }
 
@@ -237,13 +258,35 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Log.e(TAG, "onOptionsItemSelected: ");
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.collection) {
-            ToastUtils.showShort(this, "收藏功能正在开发");
+            ToastUtils.showShort(this, "正在点击");
+//            lineInfoBeen
+            if (instance.findById(lineInfoBeen.startLineID) == null) {
+                CollectionBusLineEntity collectionBusLineEntity = new CollectionBusLineEntity();
+                collectionBusLineEntity.setId(lineInfoBeen.startLineID);
+                collectionBusLineEntity.setEndLine(lineInfoBeen.endLineID);
+                collectionBusLineEntity.setUrl(lineInfoBeen.link);
+                collectionBusLineEntity.setLineName(lineInfoBeen.lineName);
+                instance.insert(collectionBusLineEntity);
+                ToastUtils.showShort(this, "报存数据");
+                collectionBut.setEnabled(false);
+                collectionBut.setIcon(ContextCompat.getDrawable(mActivity,R.mipmap.collection_targer_select));
+
+            }
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        Log.i(TAG, "onPrepareOptionsMenu: 加载菜单按钮");
+        return true;
     }
 }

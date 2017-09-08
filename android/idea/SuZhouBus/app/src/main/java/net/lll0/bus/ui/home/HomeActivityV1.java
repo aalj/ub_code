@@ -24,6 +24,8 @@ import net.lll0.bus.adapter.BaseRecyclerAdapter;
 import net.lll0.bus.adapter.RecyclerViewHolder;
 import net.lll0.bus.contstant.UmengConstant;
 import net.lll0.bus.database.bean.SearchLineBean;
+import net.lll0.bus.database.entity.CollectionBusLineEntity;
+import net.lll0.bus.database.manager.CollectionManager;
 import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.ui.businfo.LineInfoActivity;
 import net.lll0.bus.ui.feedback.FeedbackActivity;
@@ -81,7 +83,29 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         setSupportActionBar(toolbar);
         initView();
 //        initData();
+        initCollection();
 
+
+    }
+
+    private void initCollection() {
+        List<CollectionBusLineEntity> select = CollectionManager.getInstance().select();
+        if (select!=null) {
+            lineBeans = new ArrayList<>();
+            SearchLineBean searchLineBean = null;
+            for (CollectionBusLineEntity entity : select) {
+                searchLineBean = new SearchLineBean();
+                searchLineBean.link=entity.getUrl();
+                searchLineBean.startLineID=entity.getId();
+                searchLineBean.lineName=entity.getLineName();
+                searchLineBean.endLineID=entity.getEndLine();
+                lineBeans.add(searchLineBean);
+            }
+        }
+        if (lineBeans.size()>0) {
+            list.setVisibility(View.VISIBLE);
+            recyclerAdapter.addList(lineBeans);
+        }
 
     }
 
@@ -243,7 +267,7 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         mFeedback = (TextView) findViewById(R.id.feedback);
         mFeedback.setOnClickListener(this);
 
-
+//          有米广告相关代码
 //        View bannerView = BannerManager.getInstance(mActivity)
 //                .getBannerView(mActivity, new BannerViewListener() {
 //                    @Override
@@ -376,20 +400,20 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
     protected void onPause() {
         super.onPause();
         // 插屏广告
-        SpotManager.getInstance(mActivity).onPause();
+//        SpotManager.getInstance(mActivity).onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         // 插屏广告
-        SpotManager.getInstance(mActivity).onStop();
+//        SpotManager.getInstance(mActivity).onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // 插屏广告
-        SpotManager.getInstance(mActivity).onDestroy();
+//        SpotManager.getInstance(mActivity).onDestroy();
     }
 }

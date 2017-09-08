@@ -144,11 +144,6 @@ public class CollectionBusLineEntityDao extends AbstractDao<CollectionBusLineEnt
     }
 
     @Override
-    protected boolean hasKey(CollectionBusLineEntity entity) {
-        return false;
-    }
-
-    @Override
     protected final boolean isEntityUpdateable() {
         return true;
     }
