@@ -36,12 +36,10 @@ import net.lll0.bus.utils.ToastUtil;
 import net.lll0.bus.utils.WaitLoading;
 import net.lll0.bus.utils.umeng.UmengManger;
 import net.lll0.framwork.support.view.MvpActivity;
-import net.youmi.android.AdManager;
-import net.youmi.android.nm.bn.BannerManager;
-import net.youmi.android.nm.bn.BannerViewListener;
 import net.youmi.android.nm.sp.SpotListener;
 import net.youmi.android.nm.sp.SpotManager;
 import net.youmi.android.nm.sp.SpotRequestListener;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -161,6 +159,7 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
             }
         });
 
+        MyLog.v();
 
     }
 
