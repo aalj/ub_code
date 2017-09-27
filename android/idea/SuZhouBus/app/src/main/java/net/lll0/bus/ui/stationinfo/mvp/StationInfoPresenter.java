@@ -49,7 +49,12 @@ public class StationInfoPresenter extends MvpBasePresenter<StationInfoView> {
 
             @Override
             public void fail(Exception e) {
+                ((Activity) context).runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
                 error();
+                    }
+                });
             }
         }, context);
 
