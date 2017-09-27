@@ -138,5 +138,14 @@
         android:layout_height="wrap_content"
         android:text="❤❤❤反馈点这里❤❤❤"/>
 
+    <!--广告的相关显示位置-->
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/ll_banner"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_horizontal">-->
+    <!--</LinearLayout>-->
+
 
 </LinearLayout>

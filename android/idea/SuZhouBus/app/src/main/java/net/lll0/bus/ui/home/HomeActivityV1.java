@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +24,8 @@ import net.lll0.bus.adapter.BaseRecyclerAdapter;
 import net.lll0.bus.adapter.RecyclerViewHolder;
 import net.lll0.bus.contstant.UmengConstant;
 import net.lll0.bus.database.bean.SearchLineBean;
+import net.lll0.bus.database.entity.CollectionBusLineEntity;
+import net.lll0.bus.database.manager.CollectionManager;
 import net.lll0.bus.suzhoubus.R;
 import net.lll0.bus.ui.businfo.LineInfoActivity;
 import net.lll0.bus.ui.feedback.FeedbackActivity;
@@ -33,6 +36,12 @@ import net.lll0.bus.utils.ToastUtil;
 import net.lll0.bus.utils.WaitLoading;
 import net.lll0.bus.utils.umeng.UmengManger;
 import net.lll0.framwork.support.view.MvpActivity;
+import net.youmi.android.AdManager;
+import net.youmi.android.nm.bn.BannerManager;
+import net.youmi.android.nm.bn.BannerViewListener;
+import net.youmi.android.nm.sp.SpotListener;
+import net.youmi.android.nm.sp.SpotManager;
+import net.youmi.android.nm.sp.SpotRequestListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +52,9 @@ import static android.view.View.GONE;
 public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         implements
         View.OnClickListener, HomeView {
+    private static final String TAG = HomeActivityV1.class.getSimpleName();
+
+
     private Activity mActivity;
     private List<SearchLineBean> lineBeans = null;
 
@@ -66,11 +78,89 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_home_v1);
+
         mActivity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
-        MyLog.v();
+//        initData();
+        initCollection();
+
+
+    }
+
+    private void initCollection() {
+        List<CollectionBusLineEntity> select = CollectionManager.getInstance().select();
+        if (select!=null) {
+            lineBeans = new ArrayList<>();
+            SearchLineBean searchLineBean = null;
+            for (CollectionBusLineEntity entity : select) {
+                searchLineBean = new SearchLineBean();
+                searchLineBean.link=entity.getUrl();
+                searchLineBean.startLineID=entity.getId();
+                searchLineBean.lineName=entity.getLineName();
+                searchLineBean.endLineID=entity.getEndLine();
+                lineBeans.add(searchLineBean);
+            }
+        }
+        if (lineBeans.size()>0) {
+            list.setVisibility(View.VISIBLE);
+            recyclerAdapter.addList(lineBeans);
+        }
+
+    }
+
+    private void initDataAd() {
+        SpotManager.getInstance(mActivity).setImageType(SpotManager.IMAGE_TYPE_VERTICAL);
+
+        // 设置动画类型，默认高级动画
+        //		// 无动画
+        //		SpotManager.getInstance(mContext).setAnimationType(SpotManager
+        //				.ANIMATION_TYPE_NONE);
+        //		// 简单动画
+        //		SpotManager.getInstance(mContext)
+        //		                    .setAnimationType(SpotManager.ANIMATION_TYPE_SIMPLE);
+        // 高级动画
+        SpotManager.getInstance(mActivity)
+                .setAnimationType(SpotManager.ANIMATION_TYPE_ADVANCED);
+
+        SpotManager.getInstance(mActivity).requestSpot(new SpotRequestListener() {
+            @Override
+            public void onRequestSuccess() {
+                Log.e(TAG, "onRequestSuccess:  广告获取成功" );
+                ToastUtil.showShortToast(mActivity,"广澳获取成功");
+
+                SpotManager.getInstance(mActivity).showSlideableSpot(mActivity,
+                        new SpotListener() {
+                            @Override
+                            public void onShowSuccess() {
+                                Log.e(TAG, "onRequestSuccess:  展示成功" );
+                            }
+
+                            @Override
+                            public void onShowFailed(int i) {
+                                Log.e(TAG, "onRequestSuccess:  展示失败" );
+                            }
+
+                            @Override
+                            public void onSpotClosed() {
+                                Log.e(TAG, "onRequestSuccess:  展示关闭" );
+                            }
+
+                            @Override
+                            public void onSpotClicked(boolean b) {
+                                Log.e(TAG, "onRequestSuccess:  展示点击" );
+                            }
+                        });
+            }
+
+            @Override
+            public void onRequestFailed(int i) {
+                Log.e(TAG, "onRequestSuccess:  广告获取失败" );
+
+            }
+        });
+
 
     }
 
@@ -177,6 +267,35 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         });
         mFeedback = (TextView) findViewById(R.id.feedback);
         mFeedback.setOnClickListener(this);
+
+//          有米广告相关代码
+//        View bannerView = BannerManager.getInstance(mActivity)
+//                .getBannerView(mActivity, new BannerViewListener() {
+//                    @Override
+//                    public void onRequestSuccess() {
+//                        Log.e(TAG, "onRequestSuccess:  展示成功" );
+//                    }
+//
+//                    @Override
+//                    public void onSwitchBanner() {
+//                        Log.e(TAG, "onRequestSuccess:  onSwitchBanner" );
+//
+//                    }
+//
+//                    @Override
+//                    public void onRequestFailed() {
+//                        Log.e(TAG, "onRequestSuccess:  展示失败" );
+//                    }
+//                });
+
+// 获取要嵌入广告条的布局
+//        LinearLayout bannerLayout = (LinearLayout) findViewById(R.id.ll_banner);
+
+// 将广告条加入到布局中
+//        bannerLayout.addView(bannerView);
+
+
+
     }
 
 
@@ -194,6 +313,7 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
 
     @Override
     public void onClick(View view) {
+        Log.e(TAG, "onClick: " );
         int id = view.getId();
         if (R.id.home_search_btn_action == id) {  //搜索触发
 //            shapeLoadingDialog.show();
@@ -274,5 +394,27 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         WaitLoading.dismiss();
         ToastUtil.showLongToast(mActivity, errorMessge);
 
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 插屏广告
+//        SpotManager.getInstance(mActivity).onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 插屏广告
+//        SpotManager.getInstance(mActivity).onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 插屏广告
+//        SpotManager.getInstance(mActivity).onDestroy();
     }
 }

@@ -2,7 +2,6 @@ package net.lll0.bus.utils.umeng;
 
 import android.content.Context;
 
-import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import net.lll0.bus.ui.APP;
@@ -13,7 +12,7 @@ public class UmengManger {
     public static UmengManger umengManger;
 
 	private UmengManger() {
-		context = APP.getmContext();
+		context = APP.getContext();
 	}
 
 	public static UmengManger getInstance() {
