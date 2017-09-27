@@ -28,6 +28,7 @@ import net.lll0.bus.ui.businfo.LineInfoActivity;
 import net.lll0.bus.ui.feedback.FeedbackActivity;
 import net.lll0.bus.ui.home.mvp.HomePresenter;
 import net.lll0.bus.ui.home.mvp.HomeView;
+import net.lll0.bus.utils.MyLog;
 import net.lll0.bus.utils.ToastUtil;
 import net.lll0.bus.utils.WaitLoading;
 import net.lll0.bus.utils.umeng.UmengManger;
@@ -69,7 +70,7 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
-
+        MyLog.v();
 
     }
 

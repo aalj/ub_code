@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
 
+import net.lll0.bus.utils.MyLog;
 import net.lll0.bus.utils.umeng.UmengManger;
 
 /**
@@ -23,6 +24,7 @@ public class APP extends Application {
 //        MobclickAgent.setDebugMode(true);
         //开启友盟日志加密
         UmengManger.getInstance().setEnableEncrypt(true);
+        MyLog.init(true);
 
     }
 
