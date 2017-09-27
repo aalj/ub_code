@@ -67,4 +67,10 @@ public class CollectionManager {
     }
 
 
+    public void delete (  CollectionBusLineEntity c){
+        busLineEntityDao.delete(c);
+
+    }
+
+
 }

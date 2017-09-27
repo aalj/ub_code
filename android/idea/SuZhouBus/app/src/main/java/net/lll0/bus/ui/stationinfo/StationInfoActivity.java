@@ -118,6 +118,7 @@ public class StationInfoActivity
                 holder.getView(R.id.station_collection).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         ToastUtils.showShort(mActivity, "收藏功能正在开发");
                     }
                 });

@@ -237,44 +237,41 @@ public class LineInfoActivity extends MvpActivity<LineView, LinePresenter>
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.collection, menu);
         collectionBut = menu.findItem(R.id.collection);
         Log.e(TAG, "onCreateOptionsMenu: ");
 
         CollectionBusLineEntity byId = instance.findById(lineInfoBeen.startLineID);
         if (byId != null) {
-//            collectionBut.setChecked(true);
-//            collectionBut.setCheckable(true);
-            collectionBut.setEnabled(false);
-            collectionBut.setIcon(ContextCompat.getDrawable(mActivity,R.mipmap.collection_targer_select));
+//            collectionBut.setEnabled(false);
+            collectionBut.setIcon(ContextCompat.getDrawable(mActivity, R.mipmap.collection_targer_select));
         }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Log.e(TAG, "onOptionsItemSelected: ");
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.collection) {
-            ToastUtils.showShort(this, "正在点击");
-//            lineInfoBeen
-            if (instance.findById(lineInfoBeen.startLineID) == null) {
+//            ToastUtils.showShort(this, "正在点击");
+            CollectionBusLineEntity byId = instance.findById(lineInfoBeen.startLineID);
+            if (byId == null) {//点击收藏公交数据
                 CollectionBusLineEntity collectionBusLineEntity = new CollectionBusLineEntity();
                 collectionBusLineEntity.setId(lineInfoBeen.startLineID);
                 collectionBusLineEntity.setEndLine(lineInfoBeen.endLineID);
                 collectionBusLineEntity.setUrl(lineInfoBeen.link);
                 collectionBusLineEntity.setLineName(lineInfoBeen.lineName);
                 instance.insert(collectionBusLineEntity);
-                ToastUtils.showShort(this, "报存数据");
-                collectionBut.setEnabled(false);
-                collectionBut.setIcon(ContextCompat.getDrawable(mActivity,R.mipmap.collection_targer_select));
+                ToastUtils.showShort(this, "收藏成功");
+//                collectionBut.setEnabled(false);
+                collectionBut.setIcon(ContextCompat.getDrawable(mActivity, R.mipmap.collection_targer_select));
 
+            } else {//取消收藏
+                instance.delete(byId);
+                ToastUtils.showShort(this, "取消收藏");
+                collectionBut.setIcon(ContextCompat.getDrawable(mActivity, R.mipmap.collection_targer));
             }
 
             return true;
