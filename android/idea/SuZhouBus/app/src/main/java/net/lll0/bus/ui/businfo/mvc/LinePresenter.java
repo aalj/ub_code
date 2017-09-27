@@ -42,24 +42,12 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
             public void success(String data) {
                 ParsesHomeData parsesHomeData = new ParsesHomeData(data);
                 final List<LineInfoBean> lineInfoBeans = parsesHomeData.parseHtmlLineInfoV2();
-
-
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getView().getLineInfo(lineInfoBeans);
-                    }
-                });
+                getView().getLineInfo(lineInfoBeans);
             }
 
             @Override
             public void fail(Exception e) {
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        error();
-                    }
-                });
+                error();
             }
         }, context);
 
@@ -72,28 +60,16 @@ public class LinePresenter extends MvpBasePresenter<LineView> {
             public void success(String data) {
                 Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                 final RealTImeInfoEntity realTImeInfoEntity = gson.fromJson(data, RealTImeInfoEntity.class);
-
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getView().getLineRealTimeInfo(realTImeInfoEntity);
-                    }
-                });
+                getView().getLineRealTimeInfo(realTImeInfoEntity);
             }
 
             @Override
             public void fail(Exception e) {
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        error();
-                    }
-                });
+                error();
             }
         }, context);
 
     }
-
 
 
 }

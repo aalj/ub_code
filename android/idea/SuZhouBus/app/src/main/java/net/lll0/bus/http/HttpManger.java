@@ -1,5 +1,6 @@
 package net.lll0.bus.http;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -24,7 +25,7 @@ import okhttp3.Response;
 public class HttpManger {
 
 
-    public static void useOkHttp(String url, final SendData sendData, Context context) {
+    public static void useOkHttp(String url, final SendData sendData, final Context context) {
         if (!isNetworkAvailable(context)) {
             Intent intent = new Intent(context, NotNetworkActivity.class);
             context.startActivity(intent);
@@ -39,14 +40,26 @@ public class HttpManger {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                sendData.fail(e);
+            public void onFailure(Call call, final IOException e) {
+                ((Activity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendData.fail(e);
+
+                    }
+                });
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, final Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    sendData.success(response.body().string());
+                    final String string = response.body().string();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendData.success(string);
+                        }
+                    });
                 }
             }
         });
@@ -55,12 +68,11 @@ public class HttpManger {
     }
 
 
-    public static void useOkHttpGet(String param, final SendData sendData, Context context) {
+    public static void useOkHttpGet(String param, final SendData sendData, final Context context) {
         if (!isNetworkAvailable(context)) {
             Intent intent = new Intent(context, NotNetworkActivity.class);
             context.startActivity(intent);
         }
-
 
 
         OkHttpClient client = new OkHttpClient();
@@ -70,15 +82,27 @@ public class HttpManger {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                sendData.fail(e);
+            public void onFailure(Call call, final IOException e) {
+                ((Activity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendData.fail(e);
+
+                    }
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String string = response.body().string();
-                    sendData.success(string);
+                    final String string = response.body().string();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendData.success(string);
+
+                        }
+                    });
                 }
             }
         });
@@ -87,12 +111,11 @@ public class HttpManger {
     public static void useOkHttpPost(String param,
                                      RequestBody formBody,
                                      final SendData sendData,
-                                     Context context) {
+                                     final Context context) {
         if (!isNetworkAvailable(context)) {
             Intent intent = new Intent(context, NotNetworkActivity.class);
             context.startActivity(intent);
         }
-
 
 
 //        // 表单提交 这种能满足大部分的需求
@@ -112,15 +135,28 @@ public class HttpManger {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                sendData.fail(e);
+            public void onFailure(Call call, final IOException e) {
+                ((Activity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendData.fail(e);
+
+                    }
+                });
+
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    String string = response.body().string();
-                    sendData.success(string);
+                    final String string = response.body().string();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendData.success(string);
+
+                        }
+                    });
                 }
             }
         });

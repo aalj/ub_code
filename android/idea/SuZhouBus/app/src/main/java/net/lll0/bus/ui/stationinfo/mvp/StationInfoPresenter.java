@@ -38,22 +38,12 @@ public class StationInfoPresenter extends MvpBasePresenter<StationInfoView> {
                 final List<StationInfoBean> stationInfoBeen = parsesHomeData.parseHtmlStationToLineInfo();
 
 
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getView().getStaticInfo(stationInfoBeen);
-                    }
-                });
+                getView().getStaticInfo(stationInfoBeen);
             }
 
             @Override
             public void fail(Exception e) {
-                ((Activity) context).runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        error();
-                    }
-                });
+                error();
             }
         }, context);
 
