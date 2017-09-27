@@ -29,7 +29,7 @@ public class APP extends Application {
 //        MobclickAgent.setDebugMode(true);
         //开启友盟日志加密
         UmengManger.getInstance().setEnableEncrypt(true);
-        MyLog.init(true);
+        MyLog.init(false);
 
 
     }

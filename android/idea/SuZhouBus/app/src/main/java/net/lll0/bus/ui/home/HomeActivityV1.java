@@ -84,6 +84,8 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
 //        initData();
         initCollection();
 
+        MyLog.e("测试log ");
+
 
     }
 
@@ -312,6 +314,7 @@ public class HomeActivityV1 extends MvpActivity<HomeView, HomePresenter>
 
     @Override
     public void onClick(View view) {
+        MyLog.e("测试log ");
         Log.e(TAG, "onClick: " );
         int id = view.getId();
         if (R.id.home_search_btn_action == id) {  //搜索触发
