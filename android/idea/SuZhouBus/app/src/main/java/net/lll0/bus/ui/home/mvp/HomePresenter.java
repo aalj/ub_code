@@ -49,7 +49,12 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
 
             @Override
             public void fail(Exception e) {
-                error();
+                ((Activity) context).runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        error();
+                    }
+                });
             }
         },context);
     }
