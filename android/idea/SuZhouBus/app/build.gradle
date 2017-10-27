@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 
 greendao {
@@ -11,7 +13,7 @@ greendao {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "net.lll0.bus.suzhoubus"
         minSdkVersion 14
@@ -24,45 +26,30 @@ android {
         }
     }
 
+    flavorDimensions "mode"
 
     productFlavors {
-
         //应用宝
         myapp {
+            dimension "mode"
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "myapp"]
         }
         //小米
         xiaomi {
+            dimension "mode"
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
         }
-//        //360
-//        qh360 {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
-//        }
         //百度助手
         baidu {
+            dimension "mode"
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
         }
-//        //木蚂蚁
-//        mumayi {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "mumayi"]
-//        }
-//        //华为
-//        huawei {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
-//        }
-//        //友盟
-//        bumu {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "bumu"]
-//        }
-//        //vivo
-//        vivo {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "vivo"]
-//        }
         jiuyi {
+            dimension "mode"
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "91"]
         }
         android {
+            dimension "mode"
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "android"]
         }
     }
@@ -114,4 +101,8 @@ dependencies {
     //greenDaso 工具
     compile'org.greenrobot:greendao:3.0.1'
     compile'org.greenrobot:greendao-generator:3.0.0'
+
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.anko:anko-common:$anko_version"
 }
