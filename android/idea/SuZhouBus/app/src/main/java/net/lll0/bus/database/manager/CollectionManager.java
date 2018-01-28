@@ -2,6 +2,7 @@ package net.lll0.bus.database.manager;
 
 import net.lll0.bus.database.dao.CollectionBusLineEntityDao;
 import net.lll0.bus.database.entity.CollectionBusLineEntity;
+import net.lll0.bus.mgr.ApplicationManager;
 import net.lll0.bus.ui.APP;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -24,7 +25,7 @@ public class CollectionManager {
     public static CollectionManager getInstance() {
         if (collectionManager == null) {
             collectionManager = new CollectionManager();
-            collectionManager.busLineEntityDao = APP.getDaoSession(APP.getContext()).getCollectionBusLineEntityDao();
+            collectionManager.busLineEntityDao = ApplicationManager.getDaoSession(ApplicationManager.getContext()).getCollectionBusLineEntityDao();
         }
         return collectionManager;
     }
