@@ -1,38 +1,58 @@
-package net.lll0.bus.ui;
+package net.lll0.bus.mgr;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 
-import com.umeng.analytics.MobclickAgent;
+import com.tencent.tinker.lib.tinker.TinkerInstaller;
 
-import net.lll0.bus.utils.MyLog;
 import net.lll0.bus.database.dao.DaoMaster;
 import net.lll0.bus.database.dao.DaoSession;
+import net.lll0.bus.utils.MyLog;
 import net.lll0.bus.utils.umeng.UmengManger;
-import net.youmi.android.AdManager;
 
 /**
- * Created by liang on 2017/8/25.
+ * @author liangjun on 2018/1/27.
  */
 
-public class APP extends Application {
+public class ApplicationManager {
+
+
     private static Context mContext;
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
 
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mContext = this;
+    private static ApplicationManager applicationManager;
+
+    private ApplicationManager() {
+
+    }
+
+    public static ApplicationManager getInstance() {
+        if (applicationManager == null) {
+            synchronized (ApplicationManager.class) {
+                if (applicationManager == null) {
+                    applicationManager = new ApplicationManager();
+                    return applicationManager;
+                }
+            }
+        }
+        return applicationManager;
+    }
+
+    public void  init(Application application){
+        mContext = application;
         //控制开启友盟统计的日志输出
 //        MobclickAgent.setDebugMode(true);
         //开启友盟日志加密
         UmengManger.getInstance().setEnableEncrypt(true);
-        MyLog.init(false);
-
+        MyLog.init(true);
+        TinkerInstaller.onReceiveUpgradePatch(application.getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath() + "/patch_signed_7zip.apk");
 
     }
+
+
 
 
     public static Context getContext() {
@@ -69,5 +89,6 @@ public class APP extends Application {
         }
         return daoSession;
     }
+
 
 }

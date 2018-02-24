@@ -1,36 +1,5 @@
 *.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-### Java template
-# Compiled class file
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-### Gradle template
 .gradle
 /autoupdate/build/
 /base/build/
@@ -484,4 +453,9 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
-
+.idea
+build
+*.properties
+app/build
+.DS_Store
+>>>>>>> 0352c9d0159b31305a3f6901744b6046e73305c2
