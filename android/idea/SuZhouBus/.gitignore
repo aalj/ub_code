@@ -32,7 +32,10 @@
 hs_err_pid*
 ### Gradle template
 .gradle
+/autoupdate/build/
+/base/build/
 /build/
+
 
 # Ignore Gradle GUI config
 gradle-app.setting
