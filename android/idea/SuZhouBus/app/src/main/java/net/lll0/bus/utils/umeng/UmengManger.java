@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
 
-import net.lll0.bus.mgr.ApplicationManager;
 import net.lll0.bus.ui.APP;
 
 public class UmengManger {
@@ -13,7 +12,7 @@ public class UmengManger {
     public static UmengManger umengManger;
 
 	private UmengManger() {
-		context = ApplicationManager.getContext();
+		context = APP.getContext();
 	}
 
 	public static UmengManger getInstance() {
